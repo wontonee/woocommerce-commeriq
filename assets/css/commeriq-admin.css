@@ -1,0 +1,328 @@
+.commeriq-product-panel { padding: 8px; }
+.commeriq-product-panel .button { width: 100%; }
+
+/* Licence box styling to resemble screenshot */
+.commeriq-license-box { border: 2px solid #d0e9c6; background: #ffffff; padding: 18px; border-radius: 6px; margin-top: 40px; }
+.commeriq-license-table { width: 100%; border-collapse: separate; }
+.commeriq-license-table .col-label { vertical-align: top; padding: 8px 12px; color: #666; width: 25%; }
+.commeriq-license-table .col-input { vertical-align: top; padding: 8px 12px; width: 75%; }
+.commeriq-license-table .col-input input.commeriq-full { width: 100%; box-sizing: border-box; height: 46px; }
+.commeriq-license-title .license-status { font-weight: 600; color: #2b7a2b; font-size: 16px; }
+.commeriq-license-table hr { border: 0; border-top: 1px solid #e5e5e5; margin: 10px 0; }
+
+.commeriq-box-header { padding-bottom: 12px; border-bottom: 1px solid #e1e1e1; margin-bottom: 12px; }
+.commeriq-box-title { margin: 0 0 6px 0; font-size: 18px; }
+.commeriq-box-subtext { margin: 0; color: #666; }
+.commeriq-license-box .license-header { margin-bottom: 10px; font-weight: 600; color: #2b7a2b; }
+.commeriq-license-box .regular-text { width: 60%; margin-right: 8px; }
+.license-actions { margin-top: 12px; }
+
+.nav-tab.nav-tab-disabled { color: #999; pointer-events: none; opacity: 0.6; }
+
+/* Store Analyzer box */
+.store-analyzer-box{
+	border: 2px solid #d0e9c6;
+	background: #ffffff;
+	padding: 18px;
+	border-radius: 6px;
+	margin-top: 40px;
+}
+
+.store-analyzer-box .store-analyzer-title{
+	margin-top: 0;
+	margin-bottom: 12px;
+}
+
+/* Modal styles for Compare Price and AI Content */
+#commeriq-comparison-modal,
+#commeriq-ai-modal,
+#commeriq-ai-image-modal { 
+    position: fixed; 
+    left:0; 
+    top:0; 
+    right:0; 
+    bottom:0; 
+    z-index:9999; 
+    display:none; 
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+#commeriq-comparison-modal.show,
+#commeriq-ai-modal.show,
+#commeriq-ai-image-modal.show { display: block; }
+.commeriq-modal-backdrop,
+.commeriq-modal-overlay { 
+    position: fixed; 
+    left:0; 
+    top:0; 
+    right:0; 
+    bottom:0; 
+    background: rgba(0,0,0,0.7); 
+    z-index: -1; 
+}
+.commeriq-modal-dialog,
+.commeriq-modal-content { 
+    position: relative; 
+    width: 90%; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    background:#fff; 
+    border-radius:8px; 
+    box-shadow:0 10px 40px rgba(0,0,0,0.3); 
+    padding:0; 
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 40px);
+}
+/* Smaller width for AI content modal */
+#commeriq-ai-modal .commeriq-modal-content,
+#commeriq-ai-image-modal .commeriq-modal-content {
+    max-width: 700px;
+}
+.commeriq-modal-header { 
+    padding:20px 24px; 
+    border-bottom:2px solid #e5e5e5; 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    flex-shrink: 0;
+    background: #fff;
+    z-index: 10;
+    border-radius: 8px 8px 0 0;
+}
+.commeriq-modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e1e1e;
+}
+.commeriq-modal-body { 
+    padding:24px; 
+    flex: 1 1 auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+.commeriq-modal-footer { 
+    padding:16px 24px; 
+    border-top:2px solid #e5e5e5; 
+    text-align:right; 
+    flex-shrink: 0;
+    background: #f9f9f9;
+    z-index: 10;
+    border-radius: 0 0 8px 8px;
+}
+.commeriq-modal-close { 
+    background:transparent;
+    border:0;
+    font-size:28px;
+    line-height:1;
+    cursor:pointer;
+    color: #666;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+.commeriq-modal-close:hover {
+    background: #f0f0f0;
+    color: #000;
+}
+
+/* Comparison Results Styling */
+.commeriq-competitors h3,
+.commeriq-suggestion h3,
+.commeriq-suggestion h4 {
+    color: #1e1e1e;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.commeriq-competitors table.widefat {
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.commeriq-competitors table.widefat thead {
+    background: #f9f9f9;
+}
+
+.commeriq-competitors table.widefat th {
+    font-weight: 600;
+    padding: 12px;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.commeriq-competitors table.widefat td {
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.commeriq-competitors table.widefat tr:last-child td {
+    border-bottom: none;
+}
+
+.commeriq-price-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.commeriq-price-card {
+    border: 2px solid #e5e5e5;
+    padding: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: #fff;
+}
+
+.commeriq-price-card:hover {
+    border-color: #2271b1;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.commeriq-price-card.strategy-aggressive {
+    border-color: #d63638;
+}
+
+.commeriq-price-card.strategy-aggressive:hover {
+    border-color: #d63638;
+    background: #fff5f5;
+}
+
+.commeriq-price-card.strategy-balanced {
+    border-color: #2271b1;
+}
+
+.commeriq-price-card.strategy-balanced:hover {
+    border-color: #2271b1;
+    background: #f0f6fc;
+}
+
+.commeriq-price-card.strategy-conservative {
+    border-color: #00a32a;
+}
+
+.commeriq-price-card.strategy-conservative:hover {
+    border-color: #00a32a;
+    background: #f0f9f4;
+}
+
+.commeriq-apply-price {
+    width: 100%;
+    margin-top: 12px;
+}
+
+#commeriq-comparison-loading {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+#commeriq-comparison-loading .spinner {
+    float: none;
+    margin: 0 auto 20px;
+}
+
+/* Rotation animation for refresh icon */
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+/* AI Image Button Styling - Remove focus/active outline */
+#commeriq-generate-ai-image,
+.commeriq-ai-image-button {
+    text-decoration: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+#commeriq-generate-ai-image:focus,
+#commeriq-generate-ai-image:active,
+.commeriq-ai-image-button:focus,
+.commeriq-ai-image-button:active {
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+/* Icon button consistent styling */
+.commeriq-icon-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	/* avoid button text wrapping which stacks icon above text */
+	white-space: nowrap;
+	/* ensure icon-buttons keep natural width even if a parent rule forces full width */
+	width: auto !important;
+	padding: 6px 10px;
+	box-sizing: border-box;
+}
+.commeriq-icon-button .dashicons,
+.commeriq-icon-button .commeriq-gemini-icon {
+	font-size: 18px;
+	line-height: 1;
+	display: inline-block;
+	vertical-align: middle;
+	/* prevent icon from shrinking when container is tight */
+	flex-shrink: 0;
+}
+.commeriq-icon-button:focus { outline: 2px solid #5b9dd9; outline-offset: 2px; }
+
+/* Gemini inline SVG sizing */
+.commeriq-gemini-icon { width: 18px; height: 18px; margin-right: 8px; display:inline-block; vertical-align:middle }
+.commeriq-ai-svg { width: 18px; height: 18px; margin-right: 8px; display:inline-block; vertical-align:middle }
+.commeriq-ai-svg rect, .commeriq-ai-svg circle, .commeriq-ai-svg path { vector-effect: non-scaling-stroke; }
+.commeriq-ai-svg rect { stroke-linejoin: round; }
+
+/* Allow overriding dashicon glyph for update class (use provided glyph) */
+.dashicons-update:before {
+	content: "\f463";
+}
+.dashicons-update { font-size: 18px; line-height: 1; display:inline-block; vertical-align:middle }
+/* Ensure dashicons-update shows the intended glyph (some admin themes override dashicon sets) */
+.commeriq-icon-button .dashicons-update:before { content:"\f463"; }
+
+/* AI icon color tweak: make the AI lightbulb visually distinct and aligned */
+.commeriq-icon-button .dashicons.ai-icon { color: #2271b1; font-size:18px; }
+
+/* Stronger, targeted rules for the Compare Price buttons to avoid admin theme overrides */
+#commeriq-compare-price,
+#commeriq-compare-price-header,
+#commeriq-price-tools .commeriq-icon-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    padding: 0px 8px !important;
+    gap: 6px !important;
+    box-sizing: border-box !important;
+}
+
+/* Ensure the icon sits left and doesn't wrap */
+#commeriq-compare-price .dashicons,
+#commeriq-compare-price-header .dashicons,
+#commeriq-price-tools .dashicons {
+    
+    display: inline-block !important;
+    vertical-align: middle !important;
+}
+
+/* If any parent forces .button to display:flex/width:100%, override it here for our controls */
+.panel.woocommerce_options_panel #commeriq-price-tools .button,
+.wp-editor-tools #commeriq-ai-content.commeriq-icon-button,
+#poststuff #commeriq-compare-price-header.button {
+    width: auto !important;

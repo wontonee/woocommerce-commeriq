@@ -1,0 +1,19 @@
+{
+  "name": "yourname/woocommerce-commeriq",
+  "description": "CommerIQ - AI Powered Commerce Insights for WooCommerce",
+  "type": "wordpress-plugin",
+  "autoload": {
+    "psr-4": {
+      "CommerIQ\\": "src/"
+    }
+  },
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CommerIQ\\Tests\\": "tests/"
+    }
+  }
+}

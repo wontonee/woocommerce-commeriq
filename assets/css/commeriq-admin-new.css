@@ -1,0 +1,852 @@
+ it
+ /* CommerIQ License Management Styles - BlogIBot Style */
+
+/* Allow normal scrolling */
+body.woocommerce_page_commeriq-settings #wpfooter {
+    display: none !important;
+}
+
+body.woocommerce_page_commeriq-settings .wrap {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.commeriq-admin-wrap {
+    background: #f0f0f1;
+    margin: -10px -20px 0 -10px;
+    padding: 6px 20px 8px;
+    overflow-x: hidden;
+    min-height: calc(100vh - 70px);
+}
+
+.commeriq-admin-wrap h1 {
+    color: #1d2327;
+    font-size: 23px;
+    font-weight: 400;
+    margin: 0 0 4px;
+    padding: 0;
+}
+
+.commeriq-admin-wrap > .description {
+    color: #646970;
+    font-size: 13px;
+    margin: 0 0 10px;
+}
+
+/* Tab Styles */
+.nav-tab-wrapper {
+    border-bottom: 1px solid #c3c4c7;
+    margin: 0 0 10px;
+    padding: 0;
+}
+
+.nav-tab {
+    background: #f0f0f1;
+    border: 1px solid #c3c4c7;
+    border-bottom: none;
+    color: #50575e;
+    padding: 6px 12px;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.nav-tab:hover {
+    background: #fff;
+    color: #2271b1;
+}
+
+.nav-tab-active {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+    color: #2271b1;
+    font-weight: 600;
+}
+
+.nav-tab-disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}
+
+/* Tab Content */
+.commeriq-tab-content {
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border-radius: 4px;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.commeriq-tab {
+    display: none;
+    max-width: 100%;
+}
+
+.commeriq-tab-active {
+    display: block;
+}
+
+/* License Management */
+.commeriq-license-management {
+    max-width: 900px;
+    width: 100%;
+}
+
+.commeriq-page-header {
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e0e0e0;
+    max-width: 100%;
+}
+
+.commeriq-page-header-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: #1d2327;
+}
+
+.commeriq-page-header p {
+    margin: 0;
+    color: #646970;
+    font-size: 14px;
+}
+
+/* Form Sections */
+.commeriq-form-section {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 8px;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.commeriq-form-section-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: #1d2327;
+}
+
+/* License Status Headers */
+.commeriq-license-status-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.commeriq-license-status-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.commeriq-license-icon-success {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: #00a32a;
+}
+
+.commeriq-license-icon-warning {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: #dba617;
+}
+
+/* License Active Section */
+.commeriq-license-active-section {
+    border-color: #00a32a;
+    border-width: 2px;
+}
+
+.commeriq-license-details {
+    margin: 8px 0;
+}
+
+/* Form Elements */
+.commeriq-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+    max-width: 100%;
+}
+
+.commeriq-form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.commeriq-form-group label {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #1d2327;
+    font-size: 13px;
+}
+
+.commeriq-form-group input[type="text"] {
+    padding: 6px 10px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    font-size: 13px;
+    transition: border-color 0.2s;
+}
+
+.commeriq-form-group input[type="text"]:focus {
+    border-color: #2271b1;
+    outline: none;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+
+.commeriq-form-group input[readonly] {
+    background: #f6f7f7;
+    color: #646970;
+    cursor: not-allowed;
+}
+
+.commeriq-form-group small {
+    color: #646970;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* Form Actions */
+.commeriq-form-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.button-link-delete {
+    color: #d63638 !important;
+    text-decoration: none;
+}
+
+.button-link-delete:hover {
+    color: #d63638 !important;
+    text-decoration: underline;
+}
+
+/* License Info Note */
+.commeriq-license-info-note {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.commeriq-note-icon {
+    flex-shrink: 0;
+}
+
+.commeriq-note-icon .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: #fff;
+}
+
+.commeriq-note-content h4 {
+    margin: 0 0 2px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.commeriq-note-content p {
+    margin: 0 0 6px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.3;
+    font-size: 12px;
+}
+
+.commeriq-note-content .button-primary {
+    background: #fff;
+    border-color: #fff;
+    color: #667eea;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    height: auto;
+    line-height: 1.4;
+    font-size: 12px;
+}
+
+.commeriq-note-content .button-primary:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* License Description */
+.commeriq-license-description {
+    color: #646970;
+    margin: 0 0 20px;
+    font-size: 14px;
+}
+
+/* Features Grid */
+.commeriq-features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.commeriq-features-section {
+    transition: all 0.2s ease;
+}
+
+.commeriq-feature-card {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.commeriq-feature-card:hover {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.commeriq-feature-icon {
+    margin-bottom: 4px;
+}
+
+.commeriq-feature-icon .dashicons {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: #2271b1;
+}
+
+.commeriq-feature-card h4 {
+    margin: 0 0 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.commeriq-feature-card p {
+    margin: 0;
+    color: #646970;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* Modal Styles */
+.commeriq-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.commeriq-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.commeriq-modal-dialog {
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    max-width: 500px;
+    width: 90%;
+    z-index: 1;
+}
+
+.commeriq-modal-content {
+    padding: 30px;
+    text-align: center;
+}
+
+.commeriq-modal-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.commeriq-modal-content h3 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.commeriq-modal-content p {
+    margin: 0 0 24px;
+    color: #646970;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.commeriq-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 782px) {
+    .commeriq-form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .commeriq-features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .commeriq-license-info-note {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .commeriq-note-icon .dashicons {
+        margin: 0 auto;
+    }
+}
+
+/* Store Analyzer Styles */
+.commeriq-form-section table.form-table {
+    background: #f9f9f9;
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    table-layout: fixed;
+}
+
+.commeriq-form-section table.form-table th {
+    font-weight: 600;
+    color: #1d2327;
+    padding: 12px;
+    width: 30%;
+}
+
+.commeriq-form-section table.form-table td {
+    padding: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.commeriq-form-section {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Store Analyzer Specific Styles */
+.commeriq-store-analyzer {
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Stats Grid */
+.commeriq-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.commeriq-stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+}
+
+.commeriq-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.commeriq-stat-icon {
+    font-size: 32px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.commeriq-stat-content {
+    flex: 1;
+}
+
+.commeriq-stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.commeriq-stat-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Info Sections Grid */
+.commeriq-info-sections {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.commeriq-info-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.commeriq-info-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    border-color: #2271b1;
+}
+
+.commeriq-info-header {
+    background: linear-gradient(135deg, #f6f7f9 0%, #e9ecef 100%);
+    padding: 12px 16px;
+    border-bottom: 2px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.commeriq-info-header .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: #2271b1;
+}
+
+.commeriq-info-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.commeriq-info-body {
+    padding: 16px;
+}
+
+.commeriq-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.commeriq-info-row:last-child {
+    border-bottom: none;
+}
+
+.commeriq-info-label {
+    font-weight: 500;
+    color: #646970;
+    font-size: 13px;
+}
+
+.commeriq-info-value {
+    font-weight: 600;
+    color: #1d2327;
+    font-size: 14px;
+    text-align: right;
+}
+
+/* Badges */
+.commeriq-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.commeriq-badge-success {
+    background: #d7f9e9;
+    color: #00703c;
+}
+
+.commeriq-badge-default {
+    background: #f0f0f1;
+    color: #646970;
+}
+
+/* Responsive Design for Store Analyzer */
+@media (max-width: 1200px) {
+    .commeriq-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 782px) {
+    .commeriq-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .commeriq-info-sections {
+        grid-template-columns: 1fr;
+    }
+    
+    .commeriq-info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .commeriq-info-value {
+        text-align: left;
+    }
+}
+
+/* Price Comparison Modal */
+.commeriq-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.commeriq-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.commeriq-modal-content {
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    width: 90%;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.commeriq-modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.commeriq-modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #1d2327;
+}
+
+.commeriq-modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    line-height: 1;
+    color: #646970;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.commeriq-modal-close:hover {
+    background: #f0f0f1;
+    color: #2271b1;
+}
+
+.commeriq-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.commeriq-competitors table {
+    border-collapse: collapse;
+}
+
+.commeriq-competitors th {
+    background: #f9f9f9;
+    font-weight: 600;
+    text-align: left;
+}
+
+.commeriq-competitors td,
+.commeriq-competitors th {
+    padding: 10px 12px;
+}
+
+.commeriq-price-card {
+    transition: all 0.2s;
+}
+
+.commeriq-price-card:hover {
+    border-color: #2271b1 !important;
+    box-shadow: 0 2px 8px rgba(34, 113, 177, 0.2);
+    transform: translateY(-2px);
+}
+
+.commeriq-price-card.strategy-aggressive {
+    border-color: #d63638 !important;
+}
+
+.commeriq-price-card.strategy-balanced {
+    border-color: #00a32a !important;
+}
+
+.commeriq-price-card.strategy-conservative {
+    border-color: #2271b1 !important;
+}
+
+@media (max-width: 782px) {
+    .commeriq-modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .commeriq-price-options {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* AI Content Modal Styles */
+#commeriq-ai-modal .commeriq-modal-content {
+    max-width: 500px;
+}
+
+#commeriq-ai-modal-icon {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+#commeriq-ai-modal-message {
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 24px;
+}
+
+#commeriq-ai-modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+#commeriq-ai-modal-actions button {
+    padding: 8px 24px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+#commeriq-ai-modal-confirm {
+    background: #2271b1 !important;
+    color: #fff !important;
+    border-color: #2271b1 !important;
+}
+
+#commeriq-ai-modal-confirm:hover {
+    background: #135e96 !important;
+    border-color: #135e96 !important;
+}
+
+#commeriq-ai-modal-cancel {
+    background: #fff !important;
+    color: #2271b1 !important;
+    border-color: #2271b1 !important;
+}
+
+#commeriq-ai-modal-cancel:hover {
+    background: #f0f0f1 !important;
+}
+
+#commeriq-ai-modal-ok {
+    background: #2271b1 !important;
+    color: #fff !important;
+    border-color: #2271b1 !important;
+}
+
+#commeriq-ai-modal-ok:hover {
+    background: #135e96 !important;
+    border-color: #135e96 !important;
+}
