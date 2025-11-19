@@ -14,9 +14,9 @@ body.woocommerce_page_commeriq-settings .wrap {
 .commeriq-admin-wrap {
     background: #f0f0f1;
     margin: -10px -20px 0 -10px;
-    padding: 6px 20px 8px;
+    padding: 6px 20px 20px;
     overflow-x: hidden;
-    min-height: calc(100vh - 70px);
+    min-height: 100vh;
 }
 
 .commeriq-admin-wrap h1 {

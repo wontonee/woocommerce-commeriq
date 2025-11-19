@@ -1,0 +1,39 @@
+/* CommerIQ Product Editor Styles - Product edit screens only */
+
+.commeriq-product-panel { 
+    padding: 8px; 
+}
+
+.commeriq-product-panel .button { 
+    width: 100%; 
+}
+
+/* Stronger, targeted rules for the Compare Price buttons to avoid admin theme overrides */
+#commeriq-compare-price,
+#commeriq-compare-price-header,
+#commeriq-price-tools .commeriq-icon-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    padding: 0px 8px !important;
+    gap: 6px !important;
+    box-sizing: border-box !important;
+}
+
+/* Ensure the icon sits left and doesn't wrap */
+#commeriq-compare-price .dashicons,
+#commeriq-compare-price-header .dashicons,
+#commeriq-price-tools .dashicons {
+    display: inline-block !important;
+    vertical-align: middle !important;
+}
+
+/* If any parent forces .button to display:flex/width:100%, override it here for our controls */
+.panel.woocommerce_options_panel #commeriq-price-tools .button,
+.wp-editor-tools #commeriq-ai-content.commeriq-icon-button,
+#poststuff #commeriq-compare-price-header.button {
+    width: auto !important;
+    display: inline-flex !important;
+}

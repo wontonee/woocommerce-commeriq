@@ -19,6 +19,7 @@ class Loader
         add_action('wp_ajax_commeriq_retrieve_store', [__CLASS__, 'ajax_retrieve_store']);
         add_action('wp_ajax_commeriq_save_store', [__CLASS__, 'ajax_save_store']);
         add_action('wp_ajax_commeriq_save_license', [__CLASS__, 'ajax_save_license']);
+        add_action('wp_ajax_commeriq_activate_license', [__CLASS__, 'ajax_activate_license']);
         add_action('wp_ajax_commeriq_remove_license', [__CLASS__, 'ajax_remove_license']);
 
         // OLD SettingsPage DISABLED - Using new license system in admin-settings-new.php
@@ -73,11 +74,16 @@ class Loader
         // Ensure WP dashicons are available for icon buttons
         wp_enqueue_style('dashicons');
         
-        // Use new BlogIBot-style CSS for settings page
+        // Always load common styles (modals, buttons, icons)
+        wp_enqueue_style('commeriq-admin-common', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin-common.css', ['dashicons'], COMMERIQ_VERSION . '.3');
+        
+        // Load context-specific styles
         if (strpos($hook, 'commeriq-settings') !== false) {
-            wp_enqueue_style('commeriq-admin', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin-new.css', [], COMMERIQ_VERSION . '.2');
+            // Settings page: modern BlogIBot-inspired design
+            wp_enqueue_style('commeriq-admin-settings', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin-settings.css', ['commeriq-admin-common'], COMMERIQ_VERSION . '.' . time());
         } else {
-            wp_enqueue_style('commeriq-admin', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin.css', [], COMMERIQ_VERSION . '.2');
+            // Product editor and other admin pages
+            wp_enqueue_style('commeriq-admin-product', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin-product.css', ['commeriq-admin-common'], COMMERIQ_VERSION . '.3');
         }
         
         wp_enqueue_script('commeriq-admin', COMMERIQ_PLUGIN_URL . 'assets/js/commeriq-admin.js', ['jquery'], COMMERIQ_VERSION . '.7', true);
@@ -114,7 +120,7 @@ class Loader
             require_once COMMERIQ_PLUGIN_DIR . 'src/Helpers/LicenseManager.php';
         }
         
-        require_once COMMERIQ_PLUGIN_DIR . 'src/Views/admin-settings-new.php';
+        require_once COMMERIQ_PLUGIN_DIR . 'src/Views/admin-settings.php';
     }
 
     public static function register_meta_boxes()
@@ -242,12 +248,20 @@ class Loader
         // Prepare API request
         $api_url = \CommerIQ\ApiConfig::get_endpoint_url('generate_ai');
 
+        // Truncate current description to prevent payload size issues
+        // Strip HTML tags and limit to 150 characters for context
+        $description_context = '';
+        if (!empty($current_description)) {
+            $description_context = wp_strip_all_tags($current_description);
+            $description_context = mb_substr($description_context, 0, 150);
+        }
+
         $payload = [
             'license_key' => $license['licence_key'],
             'domain' => $license['domain_name'],
             'title' => $title,
             'price' => $price ? strval($price) : '',
-            'product_description' => $current_description,
+            'product_description' => $description_context, // Send truncated version
             'action' => $action_type, // Send 'long' or 'short' to API
         ];
 
@@ -374,7 +388,11 @@ class Loader
         $result = LicenseManager::register_license($licence_key, $domain_name);
 
         if (!$result['success']) {
-            wp_send_json_error(['message' => $result['message']], 400);
+            $data = ['message' => $result['message']];
+            if (isset($result['debug_info'])) {
+                $data['debug_info'] = $result['debug_info'];
+            }
+            wp_send_json_error($data, 400);
         }
 
         // Persist the last active admin tab so a reload will restore the Licence view

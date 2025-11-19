@@ -48,8 +48,8 @@ if (file_exists(COMMERIQ_PLUGIN_DIR . 'src/DB/Migrations.php')) {
     require_once COMMERIQ_PLUGIN_DIR . 'src/DB/Migrations.php';
 }
 
-register_activation_hook(__FILE__, ['\CommerIQ\DB\Migrations', 'activate']);
-register_deactivation_hook(__FILE__, ['\CommerIQ\DB\Migrations', 'deactivate']);
+register_activation_hook(__FILE__, ['CommerIQ\DB\Migrations', 'activate']);
+register_deactivation_hook(__FILE__, ['CommerIQ\DB\Migrations', 'deactivate']);
 
 add_action('plugins_loaded', function () {
     \CommerIQ\Loader::init();

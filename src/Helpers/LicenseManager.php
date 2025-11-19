@@ -14,14 +14,16 @@ class LicenseManager
     {
         $api_url = \CommerIQ\ApiConfig::get_endpoint_url('register_license');
         
-        // Build URL with query parameters (matching Postman format)
-        $api_url .= '?license_key=' . urlencode(sanitize_text_field($license_key));
-        $api_url .= '&domain=' . urlencode(sanitize_text_field($domain_name));
+        $body = [
+            'license_key' => sanitize_text_field($license_key),
+            'domain' => sanitize_text_field($domain_name),
+        ];
 
         $args = [
             'method' => 'POST',
             'timeout' => \CommerIQ\ApiConfig::get_timeout(),
             'sslverify' => \CommerIQ\ApiConfig::should_verify_ssl(),
+            'body' => $body,
         ];
 
         $response = wp_remote_post($api_url, $args);
@@ -75,6 +77,11 @@ class LicenseManager
         return [
             'success' => false,
             'message' => $error_message,
+            'debug_info' => [
+                'url' => $api_url,
+                'response_code' => $response_code,
+                'response_body' => $response_body,
+            ]
         ];
     }
 
@@ -85,14 +92,16 @@ class LicenseManager
     {
         $api_url = \CommerIQ\ApiConfig::get_endpoint_url('remove_license');
         
-        // Build URL with query parameters (matching register format)
-        $api_url .= '?license_key=' . urlencode(sanitize_text_field($license_key));
-        $api_url .= '&domain=' . urlencode(sanitize_text_field($domain_name));
+        $body = [
+            'license_key' => sanitize_text_field($license_key),
+            'domain' => sanitize_text_field($domain_name),
+        ];
 
         $args = [
             'method' => 'POST',
             'timeout' => \CommerIQ\ApiConfig::get_timeout(),
             'sslverify' => \CommerIQ\ApiConfig::should_verify_ssl(),
+            'body' => $body,
         ];
 
         $response = wp_remote_post($api_url, $args);

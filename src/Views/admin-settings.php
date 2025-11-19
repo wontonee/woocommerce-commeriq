@@ -1,298 +1,629 @@
 <?php
 defined('ABSPATH') || exit;
-// Read saved license if present
-$opts = get_option('commeriq_license', ['licence_key' => '', 'domain_name' => '', 'activated_at' => '']);
-$licence_key = isset($opts['licence_key']) ? esc_attr($opts['licence_key']) : '';
-$domain_name = isset($opts['domain_name']) ? esc_attr($opts['domain_name']) : '';
-$activated_at = isset($opts['activated_at']) ? $opts['activated_at'] : '';
 
-// If nothing stored, offer "demo" as a placeholder but do not pre-fill the inputs.
-$show_demo_placeholder = empty($licence_key) && empty($domain_name) && empty($activated_at);
-$placeholder_licence = $show_demo_placeholder ? 'demo' : '';
-$placeholder_domain = $show_demo_placeholder ? 'demo' : '';
-
-$is_active = !empty($activated_at);
-
-// If active on the server, emit a small inline script immediately so the client
-// can restore the previously active tab before other scripts run (prevents flicker on reload).
-// Important: do NOT overwrite an existing `localStorage` value — prefer the user's stored selection.
-if ( $is_active ) {
-    $server_last_tab = esc_js( get_option( 'commeriq_last_active_tab', 'tab-licence' ) );
-    ?>
-    <script>
-        (function(){
-            try {
-                var hasHash = (window.location.hash || '').length > 1;
-                var stored = null;
-                try { stored = localStorage.getItem('commeriq_active_tab'); } catch(e) { stored = null; }
-                // Only set the URL hash from the server when there is no hash and no stored tab.
-                if (!hasHash && !stored) {
-                    try { history.replaceState(null, '', '#<?php echo $server_last_tab; ?>'); } catch(e) { window.location.hash = '#<?php echo $server_last_tab; ?>'; }
-                }
-            } catch(e) { /* ignore any early-restore errors */ }
-        })();
-    </script>
-    <?php
+// Ensure LicenseManager is available
+if (!class_exists('CommerIQ\\Helpers\\LicenseManager')) {
+    require_once COMMERIQ_PLUGIN_DIR . 'src/Helpers/LicenseManager.php';
 }
+
+use CommerIQ\Helpers\LicenseManager;
+
+// Get license status
+$license = LicenseManager::get_license();
+$is_active = LicenseManager::is_license_active();
+$licence_key = isset($license['licence_key']) ? $license['licence_key'] : '';
+$domain_name = isset($license['domain_name']) ? $license['domain_name'] : '';
+$activated_at = isset($license['activated_at']) ? $license['activated_at'] : '';
+
+// Get current domain for auto-fill
+$current_domain = LicenseManager::get_current_domain();
 ?>
-<div class="wrap">
-    <style>
-        /* Hide all tab contents until JS activates the proper one to avoid flicker/redirect on refresh */
-        .commeriq-tab { display: none; }
-    </style>
-    <div id="commeriq-license-active" class="notice notice-success commeriq-license-active" style="display:none; padding:10px; margin-bottom:10px;">
-        <span style="font-size:1.25em; margin-right:8px;">✅</span>
-        <strong><?php esc_html_e('License Active', 'commeriq'); ?></strong>
+
+<div class="wrap commeriq-admin-wrap">
+    <div class="commeriq-header">
+        <div class="commeriq-header-content">
+            <div class="commeriq-header-logo">
+                <span class="commeriq-logo-icon">🤖</span>
+                <div>
+                    <h1><?php esc_html_e('CommerIQ', 'commeriq'); ?></h1>
+                    <p class="description"><?php esc_html_e('AI-Powered Commerce Intelligence for WooCommerce', 'commeriq'); ?></p>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <h1><?php esc_html_e('CommerIQ', 'commeriq'); ?></h1>
-    <p class="description"><?php esc_html_e('Smart AI for Product Description, Image Create & Product Comparison', 'commeriq'); ?></p>
 
     <h2 class="nav-tab-wrapper">
-        <a class="nav-tab" href="#tab-licence"><?php esc_html_e('Licence', 'commeriq'); ?></a>
+        <a class="nav-tab nav-tab-active" href="#tab-licence"><?php esc_html_e('License', 'commeriq'); ?></a>
         <?php $store_tab_class = $is_active ? 'nav-tab' : 'nav-tab nav-tab-disabled'; ?>
         <a class="<?php echo $store_tab_class; ?>" href="#tab-store" data-disabled="<?php echo $is_active ? '0' : '1'; ?>"><?php esc_html_e('Store Analyzer', 'commeriq'); ?></a>
     </h2>
 
-    <div id="tab-licence" class="commeriq-tab">
-        <div id="commeriq-license-form">
-            <?php // Ajax-only UI: do not use settings_fields() to avoid options.php POST and refresh resubmission ?>
+    <div class="commeriq-tab-content">
+        <!-- License Tab -->
+        <div id="tab-licence" class="commeriq-tab commeriq-tab-active">
+            <div class="commeriq-license-management">
+                <?php if ($is_active): ?>
+                    <!-- Active License Display -->
+                    <div class="commeriq-license-card commeriq-license-active">
+                        <div class="commeriq-license-card-header">
+                            <div class="commeriq-license-status">
+                                <span class="commeriq-status-icon commeriq-status-active">
+                                    <span class="dashicons dashicons-yes-alt"></span>
+                                </span>
+                                <div class="commeriq-status-text">
+                                    <h3><?php esc_html_e('License Active', 'commeriq'); ?></h3>
+                                    <p><?php esc_html_e('Your license is active and all features are enabled', 'commeriq'); ?></p>
+                                </div>
+                            </div>
+                            <div class="commeriq-license-actions">
+                                <button type="button" class="button button-secondary" id="commeriq-modify-license-btn">
+                                    <span class="dashicons dashicons-edit"></span>
+                                    <?php esc_html_e('Modify', 'commeriq'); ?>
+                                </button>
+                                <button type="button" class="button button-link-delete" id="commeriq-remove-license-btn">
+                                    <span class="dashicons dashicons-trash"></span>
+                                    <?php esc_html_e('Remove', 'commeriq'); ?>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="commeriq-license-details">
+                            <div class="commeriq-detail-item">
+                                <span class="commeriq-detail-icon">🔑</span>
+                                <div class="commeriq-detail-content">
+                                    <span class="commeriq-detail-label"><?php esc_html_e('License Key', 'commeriq'); ?></span>
+                                    <span class="commeriq-detail-value"><?php echo esc_html($licence_key); ?></span>
+                                </div>
+                            </div>
+                            <div class="commeriq-detail-item">
+                                <span class="commeriq-detail-icon">🌐</span>
+                                <div class="commeriq-detail-content">
+                                    <span class="commeriq-detail-label"><?php esc_html_e('Domain', 'commeriq'); ?></span>
+                                    <span class="commeriq-detail-value"><?php echo esc_html($domain_name); ?></span>
+                                </div>
+                            </div>
+                            <div class="commeriq-detail-item">
+                                <span class="commeriq-detail-icon">📅</span>
+                                <div class="commeriq-detail-content">
+                                    <span class="commeriq-detail-label"><?php esc_html_e('Activated On', 'commeriq'); ?></span>
+                                    <span class="commeriq-detail-value"><?php echo esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), strtotime($activated_at))); ?></span>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="commeriq-license-box">
-                <div class="commeriq-license-table" style="">
-                    <div>
-                        <div class="commeriq-box-header">
-                            <?php if ( $is_active ) : ?>
-                                <h2 class="commeriq-box-title"><span style="font-size:1.1em; margin-right:8px;">✅</span><?php echo esc_html__('License Active', 'commeriq'); ?></h2>
-                                <p class="commeriq-box-subtext"><?php esc_html_e('Your license is active. AI features are available.', 'commeriq'); ?></p>
-                            <?php else: ?>
-                                <h2 class="commeriq-box-title"><span style="font-size:1.1em; margin-right:8px;">🔒</span><?php echo esc_html__('Activate Your License', 'commeriq'); ?></h2>
-                                <p class="commeriq-box-subtext"><?php esc_html_e('Please activate your CommerIQ license to access AI features.', 'commeriq'); ?></p>
+                        <!-- Features Showcase -->
+                        <div class="commeriq-features-showcase">
+                            <h4><?php esc_html_e('Active Features', 'commeriq'); ?></h4>
+                            <div class="commeriq-features-list">
+                                <div class="commeriq-feature-item">
+                                    <span class="commeriq-feature-icon">📊</span>
+                                    <span><?php esc_html_e('Price Comparison', 'commeriq'); ?></span>
+                                </div>
+                                <div class="commeriq-feature-item">
+                                    <span class="commeriq-feature-icon">✍️</span>
+                                    <span><?php esc_html_e('AI Descriptions', 'commeriq'); ?></span>
+                                </div>
+                                <div class="commeriq-feature-item">
+                                    <span class="commeriq-feature-icon">🖼️</span>
+                                    <span><?php esc_html_e('Image Generation', 'commeriq'); ?></span>
+                                </div>
+                                <div class="commeriq-feature-item">
+                                    <span class="commeriq-feature-icon">💹</span>
+                                    <span><?php esc_html_e('Margin Analytics', 'commeriq'); ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hidden Modify Form -->
+                    <div id="commeriq-modify-form-container" class="commeriq-license-card" style="display: none;">
+                        <div class="commeriq-license-card-header">
+                            <div class="commeriq-license-status">
+                                <span class="commeriq-status-icon commeriq-status-warning">
+                                    <span class="dashicons dashicons-edit"></span>
+                                </span>
+                                <div class="commeriq-status-text">
+                                    <h3><?php esc_html_e('Modify License', 'commeriq'); ?></h3>
+                                    <p><?php esc_html_e('Update your license key or domain', 'commeriq'); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form id="commeriq-modify-form" class="commeriq-license-form">
+                            <?php wp_nonce_field('commeriq_license_nonce', 'commeriq_license_nonce'); ?>
+                            <div class="commeriq-form-grid">
+                                <div class="commeriq-form-field">
+                                    <label for="modify_licence_key"><?php esc_html_e('License Key', 'commeriq'); ?></label>
+                                    <input type="text" id="modify_licence_key" name="licence_key" value="<?php echo esc_attr($licence_key); ?>" placeholder="<?php esc_attr_e('Enter your license key', 'commeriq'); ?>" required>
+                                </div>
+                                <div class="commeriq-form-field">
+                                    <label for="modify_domain_name"><?php esc_html_e('Domain', 'commeriq'); ?></label>
+                                    <input type="text" id="modify_domain_name" name="domain_name" value="<?php echo esc_attr($domain_name); ?>" placeholder="<?php esc_attr_e('example.com', 'commeriq'); ?>" required>
+                                </div>
+                            </div>
+                            <div class="commeriq-form-actions">
+                                <button type="submit" class="button button-primary button-large">
+                                    <span class="dashicons dashicons-saved"></span>
+                                    <?php esc_html_e('Update License', 'commeriq'); ?>
+                                </button>
+                                <button type="button" class="button button-secondary button-large" id="commeriq-cancel-modify-btn">
+                                    <?php esc_html_e('Cancel', 'commeriq'); ?>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                <?php else: ?>
+                    <!-- License Activation Form -->
+                    <div class="commeriq-license-card commeriq-license-inactive">
+                        <div class="commeriq-license-card-header">
+                            <div class="commeriq-license-status">
+                                <span class="commeriq-status-icon commeriq-status-inactive">
+                                    <span class="dashicons dashicons-lock"></span>
+                                </span>
+                                <div class="commeriq-status-text">
+                                    <h3><?php esc_html_e('Activate Your License', 'commeriq'); ?></h3>
+                                    <p><?php esc_html_e('Enter your license key to unlock all AI-powered features', 'commeriq'); ?></p>
+                                </div>
+                            </div>
+                            <a href="https://myapps.wontonee.com" target="_blank" rel="noopener noreferrer" class="button button-primary">
+                                <span class="dashicons dashicons-external"></span>
+                                <?php esc_html_e('Get License', 'commeriq'); ?>
+                            </a>
+                        </div>
+                        
+                        <form id="commeriq-license-form" class="commeriq-license-form">
+                            <?php wp_nonce_field('commeriq_license_nonce', 'commeriq_license_nonce'); ?>
+                            <div class="commeriq-form-grid">
+                                <div class="commeriq-form-field">
+                                    <label for="licence_key"><?php esc_html_e('License Key', 'commeriq'); ?></label>
+                                    <input type="text" id="licence_key" name="licence_key" placeholder="<?php esc_attr_e('Enter your license key', 'commeriq'); ?>" required>
+                                    <span class="commeriq-field-hint"><?php esc_html_e('Your unique license key from myapps.wontonee.com', 'commeriq'); ?></span>
+                                </div>
+                                <div class="commeriq-form-field">
+                                    <label for="domain_name"><?php esc_html_e('Domain', 'commeriq'); ?></label>
+                                    <input type="text" id="domain_name" name="domain_name" value="<?php echo esc_attr($current_domain); ?>" placeholder="<?php esc_attr_e('example.com', 'commeriq'); ?>" required>
+                                    <span class="commeriq-field-hint"><?php esc_html_e('The domain where this license will be activated', 'commeriq'); ?></span>
+                                </div>
+                            </div>
+                            <div class="commeriq-form-actions">
+                                <button type="submit" class="button button-primary button-hero">
+                                    <span class="dashicons dashicons-yes-alt"></span>
+                                    <?php esc_html_e('Activate License', 'commeriq'); ?>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Features Preview -->
+                        <div class="commeriq-features-preview">
+                            <h4><?php esc_html_e('Unlock These Features', 'commeriq'); ?></h4>
+                            <div class="commeriq-features-grid">
+                                <div class="commeriq-feature-card">
+                                    <div class="commeriq-feature-icon">📊</div>
+                                    <h5><?php esc_html_e('Price Comparison', 'commeriq'); ?></h5>
+                                    <p><?php esc_html_e('Compare your prices with competitors across multiple platforms', 'commeriq'); ?></p>
+                                </div>
+                                <div class="commeriq-feature-card">
+                                    <div class="commeriq-feature-icon">✍️</div>
+                                    <h5><?php esc_html_e('AI Content Generation', 'commeriq'); ?></h5>
+                                    <p><?php esc_html_e('Generate compelling product descriptions automatically', 'commeriq'); ?></p>
+                                </div>
+                                <div class="commeriq-feature-card">
+                                    <div class="commeriq-feature-icon">🖼️</div>
+                                    <h5><?php esc_html_e('AI Image Generation', 'commeriq'); ?></h5>
+                                    <p><?php esc_html_e('Create stunning product images with AI technology', 'commeriq'); ?></p>
+                                </div>
+                                <div class="commeriq-feature-card">
+                                    <div class="commeriq-feature-icon">💹</div>
+                                    <h5><?php esc_html_e('Margin Analytics', 'commeriq'); ?></h5>
+                                    <p><?php esc_html_e('Optimize your pricing strategy with smart analytics', 'commeriq'); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Store Analyzer Tab -->
+        <div id="tab-store" class="commeriq-tab">
+            <?php
+            // Get WooCommerce store data
+            $store_data = [];
+            if (function_exists('WC')) {
+                $country_code = get_option('woocommerce_default_country', '');
+                $country_parts = explode(':', $country_code);
+                $country = isset($country_parts[0]) ? WC()->countries->countries[$country_parts[0]] ?? $country_parts[0] : '';
+                $state = isset($country_parts[1]) ? WC()->countries->get_states($country_parts[0])[$country_parts[1]] ?? $country_parts[1] : '';
+                
+                $store_data = [
+                    'wc_version' => WC()->version,
+                    'country' => $country,
+                    'state' => $state,
+                    'currency' => get_woocommerce_currency(),
+                    'currency_symbol' => get_woocommerce_currency_symbol(),
+                    'address' => get_option('woocommerce_store_address', ''),
+                    'city' => get_option('woocommerce_store_city', ''),
+                    'postcode' => get_option('woocommerce_store_postcode', ''),
+                    'weight_unit' => get_option('woocommerce_weight_unit', 'kg'),
+                    'dimension_unit' => get_option('woocommerce_dimension_unit', 'cm'),
+                    'tax_enabled' => get_option('woocommerce_calc_taxes') === 'yes',
+                    'products_count' => wp_count_posts('product')->publish ?? 0,
+                ];
+            }
+            ?>
+            
+            <div class="commeriq-store-analyzer">
+                <div class="commeriq-page-header">
+                    <h2 class="commeriq-page-header-title"><?php esc_html_e('Store Analyzer', 'commeriq'); ?></h2>
+                    <p><?php esc_html_e('Comprehensive analysis of your WooCommerce store configuration and statistics', 'commeriq'); ?></p>
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="commeriq-stats-grid">
+                    <div class="commeriq-stat-card">
+                        <div class="commeriq-stat-icon">📦</div>
+                        <div class="commeriq-stat-content">
+                            <div class="commeriq-stat-value"><?php echo esc_html($store_data['products_count'] ?? 0); ?></div>
+                            <div class="commeriq-stat-label"><?php esc_html_e('Products', 'commeriq'); ?></div>
+                        </div>
+                    </div>
+                    
+                    <div class="commeriq-stat-card">
+                        <div class="commeriq-stat-icon">💰</div>
+                        <div class="commeriq-stat-content">
+                            <div class="commeriq-stat-value"><?php echo esc_html($store_data['currency'] ?? 'N/A'); ?></div>
+                            <div class="commeriq-stat-label"><?php esc_html_e('Currency', 'commeriq'); ?></div>
+                        </div>
+                    </div>
+                    
+                    <div class="commeriq-stat-card">
+                        <div class="commeriq-stat-icon">🌍</div>
+                        <div class="commeriq-stat-content">
+                            <div class="commeriq-stat-value"><?php echo esc_html($store_data['country'] ?? 'N/A'); ?></div>
+                            <div class="commeriq-stat-label"><?php esc_html_e('Country', 'commeriq'); ?></div>
+                        </div>
+                    </div>
+                    
+                    <div class="commeriq-stat-card">
+                        <div class="commeriq-stat-icon">🛠️</div>
+                        <div class="commeriq-stat-content">
+                            <div class="commeriq-stat-value"><?php echo esc_html($store_data['wc_version'] ?? 'N/A'); ?></div>
+                            <div class="commeriq-stat-label"><?php esc_html_e('WooCommerce', 'commeriq'); ?></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Detailed Information Sections -->
+                <div class="commeriq-info-sections">
+                    <!-- Location Information -->
+                    <div class="commeriq-info-card">
+                        <div class="commeriq-info-header">
+                            <span class="dashicons dashicons-location"></span>
+                            <h3><?php esc_html_e('Location Information', 'commeriq'); ?></h3>
+                        </div>
+                        <div class="commeriq-info-body">
+                            <div class="commeriq-info-row">
+                                <span class="commeriq-info-label"><?php esc_html_e('Country', 'commeriq'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html($store_data['country'] ?: __('Not Set', 'commeriq')); ?></span>
+                            </div>
+                            <div class="commeriq-info-row">
+                                <span class="commeriq-info-label"><?php esc_html_e('State/Region', 'commeriq'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html($store_data['state'] ?: __('Not Set', 'commeriq')); ?></span>
+                            </div>
+                            <div class="commeriq-info-row">
+                                <span class="commeriq-info-label"><?php esc_html_e('City', 'commeriq'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html($store_data['city'] ?: __('Not Set', 'commeriq')); ?></span>
+                            </div>
+                            <div class="commeriq-info-row">
+                                <span class="commeriq-info-label"><?php esc_html_e('Postal Code', 'commeriq'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html($store_data['postcode'] ?: __('Not Set', 'commeriq')); ?></span>
+                            </div>
+                            <?php if (!empty($store_data['address'])): ?>
+                            <div class="commeriq-info-row">
+                                <span class="commeriq-info-label"><?php esc_html_e('Address', 'commeriq'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html($store_data['address']); ?></span>
+                            </div>
                             <?php endif; ?>
                         </div>
                     </div>
-
-                    <div style="display:flex; gap:20px; margin-top:16px;">
-                        <div style="flex:1;">
-                            <label style="display:block; margin-bottom:8px; color:#717171;"><?php esc_html_e('License Key', 'commeriq'); ?></label>
-                            <input type="text" id="licence_key" name="<?php echo \CommerIQ\Admin\SettingsPage::OPTION_KEY; ?>[licence_key]" value="<?php echo $licence_key; ?>" placeholder="<?php echo esc_attr( $placeholder_licence ); ?>" class="regular-text" style="width:100%; box-sizing:border-box; height:46px; background:#f5f5f5;" <?php echo $is_active ? 'readonly' : ''; ?> />
+                    
+                    <!-- Currency & Financial -->
+                    <div class="commeriq-info-card">
+                        <div class="commeriq-info-header">
+                            <span class="dashicons dashicons-money-alt"></span>
+                            <h3><?php esc_html_e('Currency & Financial', 'commeriq'); ?></h3>
                         </div>
-                        <div style="flex:1;">
-                            <label style="display:block; margin-bottom:8px; color:#717171;"><?php esc_html_e('Domain', 'commeriq'); ?></label>
-                            <input type="text" id="domain_name" name="<?php echo \CommerIQ\Admin\SettingsPage::OPTION_KEY; ?>[domain_name]" value="<?php echo $domain_name; ?>" placeholder="<?php echo esc_attr( $placeholder_domain ); ?>" class="regular-text" style="width:100%; box-sizing:border-box; height:46px; background:#f5f5f5;" <?php echo $is_active ? 'readonly' : ''; ?> />
+                        <div class="commeriq-info-body">
+                            <div class="commeriq-info-row">
+                                <span class="commeriq-info-label"><?php esc_html_e('Currency Code', 'commeriq'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html($store_data['currency'] ?: 'USD'); ?></span>
+                            </div>
+                            <div class="commeriq-info-row">
+                                <span class="commeriq-info-label"><?php esc_html_e('Currency Symbol', 'commeriq'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html($store_data['currency_symbol'] ?: '$'); ?></span>
+                            </div>
+                            <div class="commeriq-info-row">
+                                <span class="commeriq-info-label"><?php esc_html_e('Tax Calculation', 'commeriq'); ?></span>
+                                <span class="commeriq-info-value">
+                                    <?php if ($store_data['tax_enabled']): ?>
+                                        <span class="commeriq-badge commeriq-badge-success"><?php esc_html_e('Enabled', 'commeriq'); ?></span>
+                                    <?php else: ?>
+                                        <span class="commeriq-badge commeriq-badge-default"><?php esc_html_e('Disabled', 'commeriq'); ?></span>
+                                    <?php endif; ?>
+                                </span>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="commeriq-insert-after" style="height:0; margin-top:20px; padding:0;"></div>
-
-                    <?php if ( $is_active ) : ?>
-                        <div id="commeriq-activated-row" style="margin-bottom:20px;">
-                            <label style="display:block; margin-bottom:8px; color:#717171;"><?php esc_html_e('Activated Date', 'commeriq'); ?></label>
-                            <input type="text" id="commeriq-activated-date" readonly class="regular-text" style="width:100%; box-sizing:border-box; height:46px; background:#f5f5f5;" value="<?php echo esc_attr( date_i18n( get_option('date_format') . ' ' . get_option('time_format'), strtotime( $activated_at ) ) ); ?>" />
+                    
+                    <!-- Measurement Units -->
+                    <div class="commeriq-info-card">
+                        <div class="commeriq-info-header">
+                            <span class="dashicons dashicons-chart-bar"></span>
+                            <h3><?php esc_html_e('Measurement Units', 'commeriq'); ?></h3>
                         </div>
-                    <?php endif; ?>
-
-                    <div style="text-align:right; margin-top:20px">
-                        <button type="button" class="button button-primary" id="commeriq-activate-license" <?php echo $is_active ? 'style="display:none;"' : ''; ?>><?php esc_html_e('Activate License', 'commeriq'); ?></button>
-                        <button type="button" class="button commeriq-modify-license" id="commeriq-modify-license" style="margin-right:8px; <?php echo $is_active ? '' : 'display:none;'; ?>"><?php esc_html_e('Modify License', 'commeriq'); ?></button>
-                        <button type="button" class="button button-secondary" id="commeriq-remove-license" style="background:#fff;border-color:#d9534f;color:#d9534f; <?php echo $is_active ? '' : 'display:none;'; ?>"><?php esc_html_e('Remove License', 'commeriq'); ?></button>
+                        <div class="commeriq-info-body">
+                            <div class="commeriq-info-row">
+                                <span class="commeriq-info-label"><?php esc_html_e('Weight Unit', 'commeriq'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html(strtoupper($store_data['weight_unit'])); ?></span>
+                            </div>
+                            <div class="commeriq-info-row">
+                                <span class="commeriq-info-label"><?php esc_html_e('Dimension Unit', 'commeriq'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html(strtoupper($store_data['dimension_unit'])); ?></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
+                <div class="commeriq-form-actions" style="margin-top: 16px;">
+                    <button type="button" class="button button-secondary" id="commeriq-refresh-store">
+                        <span class="dashicons dashicons-update" style="margin-top: 3px;"></span>
+                        <?php esc_html_e('Refresh Data', 'commeriq'); ?>
+                    </button>
+                    <a href="<?php echo esc_url(admin_url('admin.php?page=wc-settings')); ?>" class="button">
+                        <span class="dashicons dashicons-admin-settings" style="margin-top: 3px;"></span>
+                        <?php esc_html_e('WooCommerce Settings', 'commeriq'); ?>
+                    </a>
+                </div>
             </div>
-
         </div>
     </div>
+</div>
 
-    <div id="tab-store" class="commeriq-tab" style="display:none; margin-top:20px;">
-       
-        <?php
-        // Retrieve values from WooCommerce settings automatically
-        $woocommerce_values = ['country' => '', 'currency' => '', 'state' => '', 'address_1' => '', 'address_2' => ''];
-        if (class_exists('CommerIQ\\Helpers\\Utils')) {
-            $woocommerce_values = \CommerIQ\Helpers\Utils::derive_from_woocommerce();
-        }
-
-        // If derive_from_woocommerce returned empty values, fall back to the stored option
-        if (empty($woocommerce_values['country']) && empty($woocommerce_values['currency']) && empty($woocommerce_values['state'])) {
-            $stored = get_option('commeriq_store_config', []);
-            if (!empty($stored) && ( !empty($stored['country']) || !empty($stored['currency']) || !empty($stored['state']) )) {
-                $woocommerce_values['country'] = isset($stored['country']) ? $stored['country'] : '';
-                $woocommerce_values['currency'] = isset($stored['currency']) ? $stored['currency'] : '';
-                $woocommerce_values['state'] = isset($stored['state']) ? $stored['state'] : '';
-                $woocommerce_values['address_1'] = isset($stored['address_1']) ? $stored['address_1'] : '';
-                $woocommerce_values['address_2'] = isset($stored['address_2']) ? $stored['address_2'] : '';
-            }
-        }
-
-        // Provide a Refresh button to re-query via AJAX
-        ?>
-        <div class="store-analyzer-box">
-            <h3 class="store-analyzer-title"><?php esc_html_e('Store Analyzer', 'commeriq'); ?></h3>
-            <p class="description"><?php esc_html_e('Configuration automatically retrieved from WooCommerce settings.', 'commeriq'); ?></p>
-            <p style="margin-top:8px;"><button id="commeriq-refresh-store" class="button"><?php esc_html_e('Refresh from WooCommerce', 'commeriq'); ?></button>
-            <span style="margin-left:8px;color:#666;font-size:12px;">(Uses stored values if WooCommerce is unavailable)</span></p>
-            <table class="form-table">
-                <tr>
-                    <th><?php esc_html_e('Country', 'commeriq'); ?></th>
-                    <td><strong id="commeriq-country-display"><?php echo esc_html($woocommerce_values['country'] ?: 'Not Set'); ?></strong></td>
-                </tr>
-                <tr>
-                    <th><?php esc_html_e('Currency', 'commeriq'); ?></th>
-                    <td><strong id="commeriq-currency-display"><?php echo esc_html($woocommerce_values['currency'] ?: 'Not Set'); ?></strong></td>
-                </tr>
-                <tr>
-                    <th><?php esc_html_e('State/Region', 'commeriq'); ?></th>
-                    <td><strong id="commeriq-state-display"><?php echo esc_html($woocommerce_values['state'] ?: 'Not Set'); ?></strong></td>
-                </tr>
-                <?php if (!empty($woocommerce_values['address_1']) || !empty($woocommerce_values['address_2'])): ?>
-                <tr>
-                    <th><?php esc_html_e('Store Address', 'commeriq'); ?></th>
-                    <td>
-                        <strong id="commeriq-address-display">
-                            <?php 
-                            $address_parts = array_filter([
-                                $woocommerce_values['address_1'],
-                                $woocommerce_values['address_2']
-                            ]);
-                            echo esc_html(implode(', ', $address_parts));
-                            ?>
-                        </strong>
-                    </td>
-                </tr>
-                <?php endif; ?>
-            </table>
-            <script>
-            (function(){
-                document.addEventListener('click', function(e){
-                    var t = e.target;
-                    if (t && t.id === 'commeriq-refresh-store') {
-                        e.preventDefault();
-                        t.disabled = true; t.innerText = 'Refreshing...';
-                        var data = { action: 'commeriq_retrieve_store', _nonce: commeriqAdmin.retrieve_nonce };
-                        fetch(commeriqAdmin.ajax_url, { method: 'POST', credentials: 'same-origin', body: new URLSearchParams(data) })
-                            .then(function(r){ return r.json(); })
-                            .then(function(resp){
-                                t.disabled = false; t.innerText = 'Refresh from WooCommerce';
-                                if (resp && resp.success && resp.data) {
-                                    document.getElementById('commeriq-country-display').innerText = resp.data.country || 'Not Set';
-                                    document.getElementById('commeriq-currency-display').innerText = resp.data.currency || 'Not Set';
-                                    document.getElementById('commeriq-state-display').innerText = resp.data.state || 'Not Set';
-                                } else {
-                                    alert('Could not retrieve store values.');
-                                }
-                            }).catch(function(){ t.disabled = false; t.innerText = 'Refresh from WooCommerce'; alert('Request failed'); });
-                    }
-                });
-            })();
-            </script>
-            <p class="description" style="margin-top: 15px;">
-                <?php esc_html_e('To change these values, please update your WooCommerce settings at', 'commeriq'); ?>
-                <a href="<?php echo esc_url(admin_url('admin.php?page=wc-settings')); ?>"><?php esc_html_e('WooCommerce → Settings', 'commeriq'); ?></a>
-            </p>
+<!-- Processing Modal -->
+<div id="commeriq-modal" class="commeriq-modal" style="display:none;">
+    <div class="commeriq-modal-backdrop"></div>
+    <div class="commeriq-modal-dialog">
+        <div class="commeriq-modal-content">
+            <div class="commeriq-modal-icon" id="commeriq-modal-icon">⌛</div>
+            <h3 id="commeriq-modal-title"><?php esc_html_e('Processing', 'commeriq'); ?></h3>
+            <p id="commeriq-modal-message"><?php esc_html_e('Please wait...', 'commeriq'); ?></p>
+            <div class="commeriq-modal-actions">
+                <button type="button" class="button button-primary" id="commeriq-modal-close" style="display:none;"><?php esc_html_e('Close', 'commeriq'); ?></button>
+                <button type="button" class="button" id="commeriq-modal-cancel" style="display:none;"><?php esc_html_e('Cancel', 'commeriq'); ?></button>
+                <button type="button" class="button button-primary" id="commeriq-modal-confirm" style="display:none;"><?php esc_html_e('Confirm', 'commeriq'); ?></button>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    (function(){
-        const tabs = document.querySelectorAll('.nav-tab');
-        // Server-side flags to decide tab restoration behavior
-        var commeriq_server_active = <?php echo $is_active ? 'true' : 'false'; ?>;
-        var commeriq_server_last_tab = '<?php echo esc_js( get_option( 'commeriq_last_active_tab', 'tab-licence' ) ); ?>';
-
-        function activateTabById(id) {
-            if (!id) return;
-            const selector = '.nav-tab[href="#' + id + '"]';
-            const tab = document.querySelector(selector);
-            if (!tab) return;
-            tabs.forEach(function(x){ x.classList.remove('nav-tab-active'); });
-            tab.classList.add('nav-tab-active');
-            document.querySelectorAll('.commeriq-tab').forEach(function(c){ c.style.display = 'none'; });
-            const el = document.getElementById(id);
-            if (el) el.style.display = 'block';
-        }
-
-        tabs.forEach(function(t){
-            t.addEventListener('click', function(e){
-                // Prevent interaction on disabled tabs
-                if (t.classList.contains('nav-tab-disabled') || t.getAttribute('data-disabled') === '1') {
-                    e.preventDefault();
-                    // Provide a subtle notice encouraging activation
-                    alert('<?php echo esc_js( __( "Please activate your licence to access the Store Analyzer.", 'commeriq' ) ); ?>');
-                    return;
-                }
-                e.preventDefault();
-                const id = t.getAttribute('href').substring(1);
-                activateTabById(id);
-                // persist in URL hash (no history entry) and localStorage as a fallback
-                try { history.replaceState(null, '', '#' + id); } catch(e) { window.location.hash = '#' + id; }
-                try { localStorage.setItem('commeriq_active_tab', id); } catch(e) { /* ignore */ }
+(function($){
+    $(document).ready(function(){
+        // Tab switching
+        $('.nav-tab').on('click', function(e){
+            e.preventDefault();
+            const $tab = $(this);
+            
+            // Check if tab is disabled
+            if ($tab.hasClass('nav-tab-disabled') || $tab.data('disabled') === '1') {
+                commeriqShowModal('⚠️', '<?php echo esc_js(__('License Required', 'commeriq')); ?>', '<?php echo esc_js(__('Please activate your license to access this feature.', 'commeriq')); ?>', true);
+                return;
+            }
+            
+            const tabId = $tab.attr('href');
+            
+            // Update nav tabs
+            $('.nav-tab').removeClass('nav-tab-active');
+            $tab.addClass('nav-tab-active');
+            
+            // Update tab content
+            $('.commeriq-tab').removeClass('commeriq-tab-active');
+            $(tabId).addClass('commeriq-tab-active');
+            
+            // Update URL hash
+            window.history.replaceState(null, null, tabId);
+        });
+        
+        // Show modify form
+        $('#commeriq-modify-license-btn').on('click', function(){
+            $('.commeriq-license-active').fadeOut(200, function(){
+                $('#commeriq-modify-form-container').fadeIn(200);
             });
         });
-
-        // Restore tab selection policy:
-        // - If server reports license is NOT active, always show 'tab-licence' (Activate License)
-        // - If server reports license IS active, prefer URL hash, then localStorage, then server_last_tab, then 'tab-licence'
-        var initialHash = (window.location.hash || '').replace('#','');
-        if (!commeriq_server_active) {
-            // Ensure we land on licence tab and clear any stored tab
-            try { localStorage.removeItem('commeriq_active_tab'); } catch(e) {}
-            try { history.replaceState(null, '', '#tab-licence'); } catch(e) { window.location.hash = '#tab-licence'; }
-            activateTabById('tab-licence');
-        } else {
-            if (initialHash) {
-                activateTabById(initialHash);
-            } else {
-                try {
-                    var stored = localStorage.getItem('commeriq_active_tab') || '';
-                    if (stored) {
-                        activateTabById(stored);
-                    } else if (commeriq_server_last_tab) {
-                        activateTabById(commeriq_server_last_tab);
+        
+        // Cancel modify
+        $('#commeriq-cancel-modify-btn').on('click', function(){
+            $('#commeriq-modify-form-container').fadeOut(200, function(){
+                $('.commeriq-license-active').fadeIn(200);
+            });
+        });
+        
+        // Remove license
+        $('#commeriq-remove-license-btn').on('click', function(){
+            commeriqShowConfirmModal(
+                '⚠️',
+                '<?php echo esc_js(__('Remove License?', 'commeriq')); ?>',
+                '<?php echo esc_js(__('Are you sure you want to remove your license? This will disable all CommerIQ features.', 'commeriq')); ?>',
+                function() {
+                    // User confirmed, proceed with removal
+                    commeriqShowModal('⌛', '<?php echo esc_js(__('Processing', 'commeriq')); ?>', '<?php echo esc_js(__('Removing license...', 'commeriq')); ?>', false);
+                    
+                    $.ajax({
+                        url: commeriqAdmin.ajax_url,
+                        method: 'POST',
+                        data: {
+                            action: 'commeriq_remove_license',
+                            nonce: commeriqAdmin.license_nonce
+                        },
+                        success: function(response){
+                            if (response.success) {
+                                commeriqShowModal('✅', '<?php echo esc_js(__('Success', 'commeriq')); ?>', response.data.message || '<?php echo esc_js(__('License removed successfully', 'commeriq')); ?>', true);
+                                setTimeout(function(){ location.reload(); }, 2000);
+                            } else {
+                                commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'commeriq')); ?>', response.data.message || '<?php echo esc_js(__('Failed to remove license', 'commeriq')); ?>', true);
+                            }
+                        },
+                        error: function(){
+                            commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'commeriq')); ?>', '<?php echo esc_js(__('Connection failed', 'commeriq')); ?>', true);
+                        }
+                    });
+                }
+            );
+        });
+        
+        // License form submission (both activate and modify)
+        $(document).on('submit', '#commeriq-license-form, #commeriq-modify-form', function(e){
+            e.preventDefault();
+            
+            const $form = $(this);
+            const $submitBtn = $form.find('button[type="submit"]');
+            const originalHtml = $submitBtn.html();
+            
+            const licenceKey = $form.find('[name="licence_key"]').val().trim();
+            const domainName = $form.find('[name="domain_name"]').val().trim();
+            
+            if (!licenceKey || !domainName) {
+                commeriqShowModal('⚠️', '<?php echo esc_js(__('Validation Error', 'commeriq')); ?>', '<?php echo esc_js(__('Please fill in all fields', 'commeriq')); ?>', true);
+                return;
+            }
+            
+            $submitBtn.prop('disabled', true).html('<span class="dashicons dashicons-update" style="animation: rotation 2s infinite linear;"></span> <?php echo esc_js(__('Processing...', 'commeriq')); ?>');
+            commeriqShowModal('⌛', '<?php echo esc_js(__('Processing', 'commeriq')); ?>', '<?php echo esc_js(__('Activating your license...', 'commeriq')); ?>', false);
+            
+            $.ajax({
+                url: commeriqAdmin.ajax_url,
+                method: 'POST',
+                data: {
+                    action: 'commeriq_activate_license',
+                    nonce: commeriqAdmin.license_nonce,
+                    licence_key: licenceKey,
+                    domain_name: domainName
+                },
+                success: function(response){
+                    if (response.success) {
+                        commeriqShowModal('✅', '<?php echo esc_js(__('Success!', 'commeriq')); ?>', response.data.message || '<?php echo esc_js(__('License activated successfully', 'commeriq')); ?>', true);
+                        setTimeout(function(){ location.reload(); }, 2000);
                     } else {
-                        activateTabById('tab-licence');
+                        commeriqShowModal('⚠️', '<?php echo esc_js(__('Activation Failed', 'commeriq')); ?>', response.data.message || '<?php echo esc_js(__('Failed to activate license', 'commeriq')); ?>', true);
+                        $submitBtn.prop('disabled', false).html(originalHtml);
                     }
-                } catch(e) {
-                    activateTabById('tab-licence');
-                }
-            }
-        }
-    })();
-</script>
-    
-    <!-- Activation / Processing Modal -->
-    <div id="commeriq-modal" style="display:none; position:fixed; left:0; top:0; right:0; bottom:0; background:rgba(0,0,0,0.4); z-index:9999;">
-        <div style="max-width:520px; margin:80px auto; background:#fff; padding:20px; border-radius:6px; box-shadow:0 6px 18px rgba(0,0,0,0.2);">
-            <div style="display:flex; align-items:center; gap:12px;">
-                <div id="commeriq-modal-icon" style="font-size:28px;">⌛</div>
-                <div style="flex:1;">
-                    <div id="commeriq-modal-title" style="font-weight:600; font-size:18px;">Processing</div>
-                    <div id="commeriq-modal-message" style="color:#666; margin-top:6px;">Please wait…</div>
-                </div>
-                <div>
-                    <button id="commeriq-modal-close" class="button" style="display:none;">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-    (function(){
-        try {
-            // If multiple elements with the same ID exist (unexpected), remove all but the last one
-            var mods = document.querySelectorAll('#commeriq-modal');
-            if (mods && mods.length > 1) {
-                for (var i = 0; i < mods.length - 1; i++) {
-                    mods[i].parentNode.removeChild(mods[i]);
-                }
-            }
-
-            // Ensure the Close button hides any remaining modal (robust against duplicates)
-            document.addEventListener('click', function(e){
-                if (e.target && e.target.id === 'commeriq-modal-close') {
-                    var all = document.querySelectorAll('#commeriq-modal');
-                    all.forEach(function(m){ m.style.display = 'none'; });
+                },
+                error: function(xhr){
+                    let errorMessage = '<?php echo esc_js(__('Connection failed', 'commeriq')); ?>';
+                    
+                    if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
+                        errorMessage = xhr.responseJSON.data.message;
+                    }
+                    
+                    commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'commeriq')); ?>', errorMessage, true);
+                    $submitBtn.prop('disabled', false).html(originalHtml);
                 }
             });
-        } catch (err) { /* ignore */ }
-    })();
-    </script>
+        });
+        
+        // Refresh store data
+        $('#commeriq-refresh-store').on('click', function(e){
+            e.preventDefault();
+            const $btn = $(this);
+            const originalHtml = $btn.html();
+            
+            $btn.prop('disabled', true).html('<span class="dashicons dashicons-update" style="margin-top: 3px; animation: rotation 2s infinite linear;"></span><?php echo esc_js(__('Refreshing...', 'commeriq')); ?>');
+            
+            $.ajax({
+                url: commeriqAdmin.ajax_url,
+                method: 'POST',
+                data: {
+                    action: 'commeriq_retrieve_store',
+                    _nonce: commeriqAdmin.retrieve_nonce
+                },
+                success: function(response){
+                    $btn.prop('disabled', false).html(originalHtml);
+                    if (response.success) {
+                        commeriqShowModal('✅', '<?php echo esc_js(__('Success', 'commeriq')); ?>', '<?php echo esc_js(__('Store data refreshed', 'commeriq')); ?>', true);
+                        setTimeout(function(){ location.reload(); }, 1500);
+                    } else {
+                        commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'commeriq')); ?>', '<?php echo esc_js(__('Failed to refresh data', 'commeriq')); ?>', true);
+                    }
+                },
+                error: function(){
+                    $btn.prop('disabled', false).html(originalHtml);
+                    commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'commeriq')); ?>', '<?php echo esc_js(__('Connection failed', 'commeriq')); ?>', true);
+                }
+            });
+        });
+        
+        // Restore active tab from URL hash
+        if (window.location.hash) {
+            const hash = window.location.hash;
+            const $tab = $('.nav-tab[href="' + hash + '"]');
+            if ($tab.length && !$tab.hasClass('nav-tab-disabled')) {
+                $tab.trigger('click');
+            }
+        }
+    });
+    
+    // Modal helper functions (defined globally)
+    window.commeriqShowModal = function(icon, title, message, showClose) {
+        // Hide confirmation buttons
+        $('#commeriq-modal-confirm, #commeriq-modal-cancel').hide();
+        
+        $('#commeriq-modal-icon').text(icon);
+        $('#commeriq-modal-title').text(title);
+        $('#commeriq-modal-message').text(message);
+        $('#commeriq-modal-close').toggle(showClose);
+        $('#commeriq-modal').fadeIn(200);
+    };
+    
+    window.commeriqShowConfirmModal = function(icon, title, message, onConfirm) {
+        // Hide close button, show confirmation buttons
+        $('#commeriq-modal-close').hide();
+        $('#commeriq-modal-confirm, #commeriq-modal-cancel').show();
+        
+        $('#commeriq-modal-icon').text(icon);
+        $('#commeriq-modal-title').text(title);
+        $('#commeriq-modal-message').text(message);
+        
+        // Remove any existing click handlers
+        $('#commeriq-modal-confirm').off('click');
+        $('#commeriq-modal-cancel').off('click');
+        
+        // Add new handlers
+        $('#commeriq-modal-confirm').on('click', function(){
+            $('#commeriq-modal').fadeOut(200);
+            if (onConfirm) {
+                setTimeout(onConfirm, 250); // Small delay to let modal close
+            }
+        });
+        
+        $('#commeriq-modal-cancel').on('click', function(){
+            $('#commeriq-modal').fadeOut(200);
+        });
+        
+        $('#commeriq-modal').fadeIn(200);
+    };
+    
+    // Modal close handlers
+    $(document).on('click', '#commeriq-modal-close', function(){
+        $('#commeriq-modal').fadeOut(200);
+    });
+    
+    $(document).on('click', '.commeriq-modal-backdrop', function(){
+        // Only close on backdrop click if it's not a confirmation modal
+        if ($('#commeriq-modal-confirm').is(':visible')) {
+            return; // Don't close confirmation modals on backdrop click
+        }
+        $('#commeriq-modal').fadeOut(200);
+    });
+})(jQuery);
+</script>
