@@ -17,11 +17,11 @@ class StoreConfiguration
     {
         register_setting('commeriq_store_config_group', self::OPTION_KEY, ['type' => 'array', 'sanitize_callback' => [__CLASS__, 'sanitize']]);
 
-        add_settings_section('commeriq_store_section', __('Store Configuration', 'commeriq'), [__CLASS__, 'section_cb'], 'commeriq-settings');
+        add_settings_section('commeriq_store_section', __('Store Configuration', 'commeriq-ai-powered-commerce-insights-for-woocommerce'), [__CLASS__, 'section_cb'], 'commeriq-settings');
 
-        add_settings_field('store_preview', __('Store Details', 'commeriq'), [__CLASS__, 'field_store_preview'], 'commeriq-settings', 'commeriq_store_section');
-        add_settings_field('industry', __('Industry', 'commeriq'), [__CLASS__, 'field_industry'], 'commeriq-settings', 'commeriq_store_section');
-        add_settings_field('business_type', __('Business Type', 'commeriq'), [__CLASS__, 'field_business_type'], 'commeriq-settings', 'commeriq_store_section');
+        add_settings_field('store_preview', __('Store Details', 'commeriq-ai-powered-commerce-insights-for-woocommerce'), [__CLASS__, 'field_store_preview'], 'commeriq-settings', 'commeriq_store_section');
+        add_settings_field('industry', __('Industry', 'commeriq-ai-powered-commerce-insights-for-woocommerce'), [__CLASS__, 'field_industry'], 'commeriq-settings', 'commeriq_store_section');
+        add_settings_field('business_type', __('Business Type', 'commeriq-ai-powered-commerce-insights-for-woocommerce'), [__CLASS__, 'field_business_type'], 'commeriq-settings', 'commeriq_store_section');
     }
 
     public static function sanitize($input)
@@ -37,7 +37,7 @@ class StoreConfiguration
 
     public static function section_cb()
     {
-        echo '<p>' . esc_html__('CommerIQ reads base WooCommerce store details and stores them here for AI context.', 'commeriq') . '</p>';
+        echo '<p>' . esc_html__('CommerIQ reads base WooCommerce store details and stores them here for AI context.', 'commeriq-ai-powered-commerce-insights-for-woocommerce') . '</p>';
     }
 
     public static function field_store_preview()
@@ -49,9 +49,9 @@ class StoreConfiguration
         $state = isset($derived['state']) ? esc_html($derived['state']) : '';
 
         echo '<div id="commeriq-store-preview">';
-        echo '<p><strong>' . esc_html__('Country', 'commeriq') . ':</strong> ' . $country . '</p>';
-        echo '<p><strong>' . esc_html__('Currency', 'commeriq') . ':</strong> ' . $currency . '</p>';
-        echo '<p><strong>' . esc_html__('State/Region', 'commeriq') . ':</strong> ' . $state . '</p>';
+        echo '<p><strong>' . esc_html__('Country', 'commeriq-ai-powered-commerce-insights-for-woocommerce') . ':</strong> ' . esc_html($country) . '</p>';
+        echo '<p><strong>' . esc_html__('Currency', 'commeriq-ai-powered-commerce-insights-for-woocommerce') . ':</strong> ' . esc_html($currency) . '</p>';
+        echo '<p><strong>' . esc_html__('State/Region', 'commeriq-ai-powered-commerce-insights-for-woocommerce') . ':</strong> ' . esc_html($state) . '</p>';
         echo '</div>';
     }
 
@@ -60,10 +60,10 @@ class StoreConfiguration
         $cfg = get_option(self::OPTION_KEY, []);
         $val = isset($cfg['industry']) ? esc_attr($cfg['industry']) : '';
         $options = ['Retail','Wholesale','D2C','Manufacturer','Other'];
-        echo '<select name="' . self::OPTION_KEY . '[industry]">';
+        echo '<select name="' . esc_attr(self::OPTION_KEY) . '[industry]">';
         foreach ($options as $opt) {
             $sel = selected($val, $opt, false);
-            echo '<option value="' . esc_attr($opt) . '" ' . $sel . '>' . esc_html($opt) . '</option>';
+            echo '<option value="' . esc_attr($opt) . '" ' . esc_attr($sel) . '>' . esc_html($opt) . '</option>';
         }
         echo '</select>';
     }
@@ -73,10 +73,10 @@ class StoreConfiguration
         $cfg = get_option(self::OPTION_KEY, []);
         $val = isset($cfg['business_type']) ? esc_attr($cfg['business_type']) : '';
         $options = ['Retail','Wholesale','D2C','B2B','Other'];
-        echo '<select name="' . self::OPTION_KEY . '[business_type]">';
+        echo '<select name="' . esc_attr(self::OPTION_KEY) . '[business_type]">';
         foreach ($options as $opt) {
             $sel = selected($val, $opt, false);
-            echo '<option value="' . esc_attr($opt) . '" ' . $sel . '>' . esc_html($opt) . '</option>';
+            echo '<option value="' . esc_attr($opt) . '" ' . esc_attr($sel) . '>' . esc_html($opt) . '</option>';
         }
         echo '</select>';
     }

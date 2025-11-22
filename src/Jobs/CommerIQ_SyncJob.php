@@ -19,7 +19,7 @@ class CommerIQ_SyncJob
     {
         // Check if license is active
         if (!class_exists('CommerIQ\\Helpers\\LicenseManager') || !LicenseManager::is_license_active()) {
-            error_log('CommerIQ Sync Job: License not active. Aborting sync.');
+// error_log('CommerIQ Sync Job: License not active. Aborting sync.');
             return;
         }
 
@@ -28,11 +28,11 @@ class CommerIQ_SyncJob
             $product_ids = self::get_recent_products();
             
             if (empty($product_ids)) {
-                error_log('CommerIQ Sync Job: No products to sync.');
+// error_log('CommerIQ Sync Job: No products to sync.');
                 return;
             }
             
-            error_log('CommerIQ Sync Job: Auto-selected ' . count($product_ids) . ' recent products for sync.');
+// error_log('CommerIQ Sync Job: Auto-selected ' . count($product_ids) . ' recent products for sync.');
         }
 
         // Get API settings from old option (for backward compatibility)
@@ -42,7 +42,7 @@ class CommerIQ_SyncJob
         $apiSecret = isset($settings['api_secret']) ? $settings['api_secret'] : '';
 
         if (empty($endpoint) || empty($apiKey) || empty($apiSecret)) {
-            error_log('CommerIQ Sync Job: Missing API credentials. Please configure API settings.');
+// error_log('CommerIQ Sync Job: Missing API credentials. Please configure API settings.');
             return;
         }
 
@@ -52,13 +52,13 @@ class CommerIQ_SyncJob
         foreach ($product_ids as $post_id) {
             try {
                 if (!function_exists('wc_get_product')) {
-                    error_log('CommerIQ Sync Job: WooCommerce not available.');
+// error_log('CommerIQ Sync Job: WooCommerce not available.');
                     continue;
                 }
                 
                 $product = wc_get_product($post_id);
                 if (!$product) {
-                    error_log('CommerIQ Sync Job: Product ID ' . $post_id . ' not found.');
+// error_log('CommerIQ Sync Job: Product ID ' . $post_id . ' not found.');
                     continue;
                 }
 
@@ -80,11 +80,11 @@ class CommerIQ_SyncJob
                 $success_count++;
             } catch (\Exception $e) {
                 $error_count++;
-                error_log('CommerIQ Sync Job: Error syncing product ID ' . $post_id . ': ' . $e->getMessage());
+// error_log('CommerIQ Sync Job: Error syncing product ID ' . $post_id . ': ' . $e->getMessage());
             }
         }
 
-        error_log('CommerIQ Sync Job: Completed. Success: ' . $success_count . ', Errors: ' . $error_count);
+// error_log('CommerIQ Sync Job: Completed. Success: ' . $success_count . ', Errors: ' . $error_count);
     }
 
     /**

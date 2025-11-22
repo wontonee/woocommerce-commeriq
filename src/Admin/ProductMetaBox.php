@@ -75,7 +75,7 @@ class ProductMetaBox
         $licence_key = isset($licence['licence_key']) ? $licence['licence_key'] : 'demo';
 
         if ($licence_key === 'demo') {
-            $now = date('c');
+            $now = gmdate('c');
             $demo_resp = [
                 'product_id' => $post_id,
                 'timestamp' => $now,

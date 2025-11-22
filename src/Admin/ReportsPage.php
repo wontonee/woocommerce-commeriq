@@ -24,7 +24,7 @@ class ReportsPage
     public static function render_page()
     {
         if (!current_user_can('manage_woocommerce')) {
-            wp_die(__('Unauthorized', 'commeriq'));
+            wp_die(esc_html__('Unauthorized', 'commeriq-ai-powered-commerce-insights-for-woocommerce'));
         }
         $rows = CommerIQ_Result::get_recent(50);
         require_once COMMERIQ_PLUGIN_DIR . 'src/Views/admin-reports.php';
@@ -33,7 +33,7 @@ class ReportsPage
     public static function handle_export_csv()
     {
         if (!current_user_can('manage_woocommerce')) {
-            wp_die(__('Unauthorized', 'commeriq'));
+            wp_die(esc_html__('Unauthorized', 'commeriq-ai-powered-commerce-insights-for-woocommerce'));
         }
         check_admin_referer('commeriq_reports_export');
 
@@ -46,16 +46,20 @@ class ReportsPage
         global $wpdb;
         $table = $wpdb->prefix . 'commeriq_price_comparisons';
         $placeholders = implode(',', array_fill(0, count($ids), '%d'));
-        $sql = "SELECT * FROM {$table} WHERE id IN ({$placeholders}) ORDER BY created_at DESC";
-        $rows = $wpdb->get_results($wpdb->prepare($sql, $ids), ARRAY_A);
+        // Build query with table name first, then prepare with placeholders
+        $query = "SELECT * FROM {$table} WHERE id IN ({$placeholders}) ORDER BY created_at DESC";
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Table name is prefixed, dynamic placeholders validated, direct query necessary for CSV export
+        $rows = $wpdb->get_results($wpdb->prepare($query, $ids), ARRAY_A);
 
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="commeriq_report.csv"');
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Using php://output for direct CSV streaming
         $out = fopen('php://output', 'w');
         fputcsv($out, ['id', 'product_id', 'created_at', 'confidence_score', 'payload']);
         foreach ($rows as $r) {
             fputcsv($out, [$r['id'], $r['product_id'], $r['created_at'], $r['confidence_score'], $r['payload']]);
         }
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closing php://output stream
         fclose($out);
         exit;
     }

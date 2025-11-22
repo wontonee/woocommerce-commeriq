@@ -786,8 +786,9 @@
                 // Store generated image data
                 generatedImageData = resp.data;
 
-                // Show the generated image
-                $('#commeriq-generated-image').attr('src', resp.data.image_url);
+                // Show the generated image using proper HTML structure
+                var imageHtml = '<img src="' + resp.data.image_url + '" alt="Generated Image" style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:4px;" />';
+                $('#commeriq-generated-image-container').html(imageHtml);
                 $('#commeriq-ai-image-loading').hide();
                 $('#commeriq-ai-image-result').show();
             } else {

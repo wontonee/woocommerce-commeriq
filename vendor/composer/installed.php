@@ -1,6 +1,6 @@
 <?php return array(
     'root' => array(
-        'name' => 'yourname/woocommerce-commeriq',
+        'name' => 'yourname/commeriq-ai-powered-commerce-insights-for-woocommerce',
         'pretty_version' => '1.0.0+no-version-set',
         'version' => '1.0.0.0',
         'reference' => null,
@@ -10,7 +10,7 @@
         'dev' => false,
     ),
     'versions' => array(
-        'yourname/woocommerce-commeriq' => array(
+        'yourname/commeriq-ai-powered-commerce-insights-for-woocommerce' => array(
             'pretty_version' => '1.0.0+no-version-set',
             'version' => '1.0.0.0',
             'reference' => null,

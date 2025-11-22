@@ -2,10 +2,10 @@
 defined('ABSPATH') || exit;
 ?>
 <div class="wrap">
-    <h1><?php esc_html_e('CommerIQ Reports', 'commeriq'); ?></h1>
+    <h1><?php esc_html_e('CommerIQ Reports', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h1>
 
     <?php if (empty($rows)): ?>
-        <p><?php esc_html_e('No comparison results found.', 'commeriq'); ?></p>
+        <p><?php esc_html_e('No comparison results found.', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></p>
     <?php else: ?>
         <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
             <?php wp_nonce_field('commeriq_reports_export'); ?>
@@ -14,11 +14,11 @@ defined('ABSPATH') || exit;
                 <thead>
                     <tr>
                         <th style="width:40px;"></th>
-                        <th><?php esc_html_e('ID', 'commeriq'); ?></th>
-                        <th><?php esc_html_e('Product ID', 'commeriq'); ?></th>
-                        <th><?php esc_html_e('Created At', 'commeriq'); ?></th>
-                        <th><?php esc_html_e('Confidence', 'commeriq'); ?></th>
-                        <th><?php esc_html_e('Summary', 'commeriq'); ?></th>
+                        <th><?php esc_html_e('ID', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></th>
+                        <th><?php esc_html_e('Product ID', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></th>
+                        <th><?php esc_html_e('Created At', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></th>
+                        <th><?php esc_html_e('Confidence', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></th>
+                        <th><?php esc_html_e('Summary', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,7 +44,7 @@ defined('ABSPATH') || exit;
                 </tbody>
             </table>
             <p>
-                <button class="button button-primary" type="submit"><?php esc_html_e('Export Selected as CSV', 'commeriq'); ?></button>
+                <button class="button button-primary" type="submit"><?php esc_html_e('Export Selected as CSV', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></button>
             </p>
         </form>
     <?php endif; ?>

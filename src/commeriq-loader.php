@@ -112,7 +112,7 @@ class Loader
     public static function render_settings_page()
     {
         if (!current_user_can('manage_woocommerce')) {
-            wp_die(__('Unauthorized', 'commeriq'));
+            wp_die(esc_html__('Unauthorized', 'commeriq-ai-powered-commerce-insights-for-woocommerce'));
         }
         
         // Ensure LicenseManager is loaded before view
@@ -234,7 +234,7 @@ class Loader
         }
 
         // Get action type: 'long' for product description, 'short' for product short description
-        $action_type = isset($_POST['action_type']) ? sanitize_text_field($_POST['action_type']) : 'long';
+        $action_type = isset($_POST['action_type']) ? sanitize_text_field(wp_unslash($_POST['action_type'])) : 'long';
 
         // Get product data
         $title = $product->get_name();
@@ -265,8 +265,8 @@ class Loader
             'action' => $action_type, // Send 'long' or 'short' to API
         ];
 
-        error_log('CommerIQ AI Content - Endpoint: ' . $api_url);
-        error_log('CommerIQ AI Content - Payload: ' . wp_json_encode($payload));
+// error_log('CommerIQ AI Content - Endpoint: ' . $api_url);
+// error_log('CommerIQ AI Content - Payload: ' . wp_json_encode($payload));
 
         $args = [
             'body' => wp_json_encode($payload),
@@ -278,24 +278,24 @@ class Loader
         $response = wp_remote_post($api_url, $args);
 
         if (is_wp_error($response)) {
-            error_log('CommerIQ AI Content - WP Error: ' . $response->get_error_message());
+// error_log('CommerIQ AI Content - WP Error: ' . $response->get_error_message());
             wp_send_json_error(['message' => 'API request failed: ' . $response->get_error_message()], 500);
         }
 
         $body = wp_remote_retrieve_body($response);
         $status = wp_remote_retrieve_response_code($response);
         
-        error_log('CommerIQ AI Content - Response Status: ' . $status);
-        error_log('CommerIQ AI Content - Response Body: ' . substr($body, 0, 500));
+// error_log('CommerIQ AI Content - Response Status: ' . $status);
+// error_log('CommerIQ AI Content - Response Body: ' . substr($body, 0, 500));
         
         $data = json_decode($body, true);
 
         if (empty($data) || !isset($data['description'])) {
-            error_log('CommerIQ AI Content - Invalid response data: ' . print_r($data, true));
+// error_log('CommerIQ AI Content - Invalid response data: ' . // print_r($data, true));
             wp_send_json_error(['message' => 'Invalid API response'], 500);
         }
 
-        error_log('CommerIQ AI Content - Sending success response');
+// error_log('CommerIQ AI Content - Sending success response');
         
         // Clean output buffer one more time before sending JSON
         if (ob_get_level()) {
@@ -344,7 +344,7 @@ class Loader
             wp_send_json_error(['message' => 'Unauthorized'], 403);
         }
 
-        $vals = isset($_POST['store_values']) && is_array($_POST['store_values']) ? wp_unslash($_POST['store_values']) : [];
+        $vals = isset($_POST['store_values']) && is_array($_POST['store_values']) ? array_map('sanitize_text_field', wp_unslash($_POST['store_values'])) : [];
         $out = [
             'country' => isset($vals['country']) ? sanitize_text_field($vals['country']) : '',
             'currency' => isset($vals['currency']) ? sanitize_text_field($vals['currency']) : '',
@@ -372,12 +372,12 @@ class Loader
         // Accept either a posted 'license' array or individual fields (compatibility with different serializers)
         $vals = [];
         if (isset($_POST['license']) && is_array($_POST['license'])) {
-            $vals = wp_unslash($_POST['license']);
+            $vals = array_map('sanitize_text_field', wp_unslash($_POST['license']));
         } else {
             // Fallback to individual post fields
             $vals = [
-                'licence_key' => isset($_POST['licence_key']) ? wp_unslash($_POST['licence_key']) : '',
-                'domain_name' => isset($_POST['domain_name']) ? wp_unslash($_POST['domain_name']) : '',
+                'licence_key' => isset($_POST['licence_key']) ? sanitize_text_field(wp_unslash($_POST['licence_key'])) : '',
+                'domain_name' => isset($_POST['domain_name']) ? sanitize_text_field(wp_unslash($_POST['domain_name'])) : '',
             ];
         }
 
@@ -461,7 +461,7 @@ class Loader
         $license = get_option('commeriq_license', []);
         
         // Debug: Log license data
-        error_log('CommerIQ AI Image - License Data: ' . wp_json_encode($license));
+// error_log('CommerIQ AI Image - License Data: ' . wp_json_encode($license));
         
         if (empty($license['licence_key']) || empty($license['domain_name'])) {
             wp_send_json_error(['message' => 'License not activated'], 400);
@@ -484,9 +484,9 @@ class Loader
         }
 
         // Get optional parameters
-        $description = isset($_POST['description']) ? sanitize_textarea_field($_POST['description']) : '';
-        $style = isset($_POST['style']) ? sanitize_text_field($_POST['style']) : '';
-        $size = isset($_POST['size']) ? sanitize_text_field($_POST['size']) : '1024x1024';
+        $description = isset($_POST['description']) ? sanitize_textarea_field(wp_unslash($_POST['description'])) : '';
+        $style = isset($_POST['style']) ? sanitize_text_field(wp_unslash($_POST['style'])) : '';
+        $size = isset($_POST['size']) ? sanitize_text_field(wp_unslash($_POST['size'])) : '1024x1024';
 
         // Prepare API request
         $endpoint = \CommerIQ\ApiConfig::get_endpoint_url('generate_product_image');
@@ -501,8 +501,8 @@ class Loader
         ];
 
         // Debug: Log the payload being sent
-        error_log('CommerIQ AI Image - Endpoint: ' . $endpoint);
-        error_log('CommerIQ AI Image - Payload: ' . wp_json_encode($payload));
+// error_log('CommerIQ AI Image - Endpoint: ' . $endpoint);
+// error_log('CommerIQ AI Image - Payload: ' . wp_json_encode($payload));
 
         // Prepare request arguments
         $args = [
@@ -515,7 +515,7 @@ class Loader
         $response = wp_remote_post($endpoint, $args);
 
         if (is_wp_error($response)) {
-            error_log('CommerIQ AI Image - WP Error: ' . $response->get_error_message());
+// error_log('CommerIQ AI Image - WP Error: ' . $response->get_error_message());
             $error_msg = $response->get_error_message();
             
             // Provide user-friendly error messages
@@ -530,8 +530,8 @@ class Loader
         $body = wp_remote_retrieve_body($response);
         
         // Debug: Log the response
-        error_log('CommerIQ AI Image - Response Status: ' . $status);
-        error_log('CommerIQ AI Image - Response Body: ' . substr($body, 0, 500) . '...');
+// error_log('CommerIQ AI Image - Response Status: ' . $status);
+// error_log('CommerIQ AI Image - Response Body: ' . substr($body, 0, 500) . '...');
         
         $data = json_decode($body, true);
 
@@ -542,7 +542,7 @@ class Loader
 
         // Check for base64 image data in nested structure
         if (!isset($data['image']['base64_data'])) {
-            error_log('CommerIQ AI Image - Invalid response structure: ' . print_r($data, true));
+// error_log('CommerIQ AI Image - Invalid response structure: ' . // print_r($data, true));
             wp_send_json_error(['message' => 'Invalid API response: missing image data'], 500);
         }
 
@@ -553,38 +553,38 @@ class Loader
             $base64_data = substr($base64_data, strpos($base64_data, ',') + 1);
         }
         
-        error_log('CommerIQ AI Image - Base64 data length: ' . strlen($base64_data) . ' chars');
+// error_log('CommerIQ AI Image - Base64 data length: ' . strlen($base64_data) . ' chars');
         
         // Decode base64 to binary
         $image_binary = base64_decode($base64_data);
         if ($image_binary === false) {
-            error_log('CommerIQ AI Image - Failed to decode base64 data');
+// error_log('CommerIQ AI Image - Failed to decode base64 data');
             wp_send_json_error(['message' => 'Failed to decode image data'], 500);
         }
         
-        error_log('CommerIQ AI Image - Binary size: ' . strlen($image_binary) . ' bytes');
+// error_log('CommerIQ AI Image - Binary size: ' . strlen($image_binary) . ' bytes');
         
         // Create temporary file and write binary data
         $temp_file = wp_tempnam();
         if (!$temp_file) {
-            error_log('CommerIQ AI Image - Failed to create temp file');
+// error_log('CommerIQ AI Image - Failed to create temp file');
             wp_send_json_error(['message' => 'Failed to create temporary file'], 500);
         }
         
         $write_result = file_put_contents($temp_file, $image_binary);
         if ($write_result === false) {
-            error_log('CommerIQ AI Image - Failed to write binary data to temp file');
-            @unlink($temp_file);
+// error_log('CommerIQ AI Image - Failed to write binary data to temp file');
+            @wp_delete_file($temp_file);
             wp_send_json_error(['message' => 'Failed to save image data'], 500);
         }
         
-        error_log('CommerIQ AI Image - Temp file created: ' . $temp_file . ' (' . $write_result . ' bytes written)');
+// error_log('CommerIQ AI Image - Temp file created: ' . $temp_file . ' (' . $write_result . ' bytes written)');
         
         // Get MIME type and determine extension
         $mime_type = isset($data['image']['mime_type']) ? $data['image']['mime_type'] : 'image/png';
         $extension = ($mime_type === 'image/png') ? '.png' : '.jpg';
         
-        error_log('CommerIQ AI Image - MIME type: ' . $mime_type);
+// error_log('CommerIQ AI Image - MIME type: ' . $mime_type);
 
         // Prepare file array for media_handle_sideload
         $file_array = [
@@ -598,7 +598,7 @@ class Loader
 
         // Clean up temp file
         if (file_exists($temp_file)) {
-            @unlink($temp_file);
+            @wp_delete_file($temp_file);
         }
 
         if (is_wp_error($attachment_id)) {

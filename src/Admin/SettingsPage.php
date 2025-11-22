@@ -18,10 +18,10 @@ class SettingsPage
     {
         register_setting('commeriq_license_group', self::OPTION_KEY, ['type' => 'array', 'sanitize_callback' => [__CLASS__, 'sanitize']]);
 
-        add_settings_section('commeriq_license_section', __('Licence', 'commeriq'), [__CLASS__, 'section_cb'], 'commeriq-settings');
+        add_settings_section('commeriq_license_section', __('Licence', 'commeriq-ai-powered-commerce-insights-for-woocommerce'), [__CLASS__, 'section_cb'], 'commeriq-settings');
 
-        add_settings_field('licence_key', __('Licence Key', 'commeriq'), [__CLASS__, 'field_licence_key'], 'commeriq-settings', 'commeriq_license_section');
-        add_settings_field('domain_name', __('Domain Name', 'commeriq'), [__CLASS__, 'field_domain_name'], 'commeriq-settings', 'commeriq_license_section');
+        add_settings_field('licence_key', __('Licence Key', 'commeriq-ai-powered-commerce-insights-for-woocommerce'), [__CLASS__, 'field_licence_key'], 'commeriq-settings', 'commeriq_license_section');
+        add_settings_field('domain_name', __('Domain Name', 'commeriq-ai-powered-commerce-insights-for-woocommerce'), [__CLASS__, 'field_domain_name'], 'commeriq-settings', 'commeriq_license_section');
     }
 
     public static function sanitize($input)
@@ -37,21 +37,21 @@ class SettingsPage
 
     public static function section_cb()
     {
-        echo '<p>' . esc_html__('Enter your licence details.', 'commeriq') . '</p>';
+        echo '<p>' . esc_html__('Enter your licence details.', 'commeriq-ai-powered-commerce-insights-for-woocommerce') . '</p>';
     }
 
     public static function field_licence_key()
     {
         $opts = get_option(self::OPTION_KEY, []);
         $val = isset($opts['licence_key']) ? esc_attr($opts['licence_key']) : '';
-        echo '<input type="text" name="' . self::OPTION_KEY . '[licence_key]" value="' . $val . '" class="regular-text" />';
+        echo '<input type="text" name="' . esc_attr(self::OPTION_KEY) . '[licence_key]" value="' . esc_attr($val) . '" class="regular-text" />';
     }
 
     public static function field_domain_name()
     {
         $opts = get_option(self::OPTION_KEY, []);
         $val = isset($opts['domain_name']) ? esc_attr($opts['domain_name']) : '';
-        echo '<input type="text" name="' . self::OPTION_KEY . '[domain_name]" value="' . $val . '" class="regular-text" />';
+        echo '<input type="text" name="' . esc_attr(self::OPTION_KEY) . '[domain_name]" value="' . esc_attr($val) . '" class="regular-text" />';
     }
 
     public static function ajax_save_license()

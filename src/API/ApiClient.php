@@ -48,14 +48,14 @@ class ApiClient
         ]);
 
         if (is_wp_error($response)) {
-            throw new \Exception($response->get_error_message());
+            throw new \Exception(esc_html($response->get_error_message()));
         }
 
         $code = wp_remote_retrieve_response_code($response);
         $body = wp_remote_retrieve_body($response);
 
         if ($code !== 200) {
-            throw new \Exception('API returned HTTP ' . $code . ': ' . $body);
+            throw new \Exception(esc_html('API returned HTTP ' . $code . ': ' . $body));
         }
 
         $data = json_decode($body, true);
