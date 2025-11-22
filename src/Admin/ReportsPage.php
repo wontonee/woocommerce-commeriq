@@ -24,7 +24,7 @@ class ReportsPage
     public static function render_page()
     {
         if (!current_user_can('manage_woocommerce')) {
-            wp_die(esc_html__('Unauthorized', 'woocommerce-commeriq'));
+            wp_die(esc_html__('Unauthorized', 'commeriq-ai-powered-commerce-insights-for-woocommerce'));
         }
         $rows = CommerIQ_Result::get_recent(50);
         require_once COMMERIQ_PLUGIN_DIR . 'src/Views/admin-reports.php';
@@ -33,7 +33,7 @@ class ReportsPage
     public static function handle_export_csv()
     {
         if (!current_user_can('manage_woocommerce')) {
-            wp_die(esc_html__('Unauthorized', 'woocommerce-commeriq'));
+            wp_die(esc_html__('Unauthorized', 'commeriq-ai-powered-commerce-insights-for-woocommerce'));
         }
         check_admin_referer('commeriq_reports_export');
 

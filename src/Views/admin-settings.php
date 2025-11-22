@@ -25,17 +25,17 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
             <div class="commeriq-header-logo">
                 <span class="commeriq-logo-icon">🤖</span>
                 <div>
-                    <h1><?php esc_html_e('CommerIQ', 'woocommerce-commeriq'); ?></h1>
-                    <p class="description"><?php esc_html_e('AI-Powered Commerce Intelligence for WooCommerce', 'woocommerce-commeriq'); ?></p>
+                    <h1><?php esc_html_e('CommerIQ', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h1>
+                    <p class="description"><?php esc_html_e('AI-Powered Commerce Intelligence for WooCommerce', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></p>
                 </div>
             </div>
         </div>
     </div>
 
     <h2 class="nav-tab-wrapper">
-        <a class="nav-tab nav-tab-active" href="#tab-licence"><?php esc_html_e('License', 'woocommerce-commeriq'); ?></a>
+        <a class="nav-tab nav-tab-active" href="#tab-licence"><?php esc_html_e('License', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></a>
         <?php $commeriq_store_tab_class = $commeriq_is_active ? 'nav-tab' : 'nav-tab nav-tab-disabled'; ?>
-        <a class="<?php echo esc_attr($commeriq_store_tab_class); ?>" href="#tab-store" data-disabled="<?php echo esc_attr($commeriq_is_active ? '0' : '1'); ?>"><?php esc_html_e('Store Analyzer', 'woocommerce-commeriq'); ?></a>
+        <a class="<?php echo esc_attr($commeriq_store_tab_class); ?>" href="#tab-store" data-disabled="<?php echo esc_attr($commeriq_is_active ? '0' : '1'); ?>"><?php esc_html_e('Store Analyzer', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></a>
     </h2>
 
     <div class="commeriq-tab-content">
@@ -51,18 +51,18 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                                     <span class="dashicons dashicons-yes-alt"></span>
                                 </span>
                                 <div class="commeriq-status-text">
-                                    <h3><?php esc_html_e('License Active', 'woocommerce-commeriq'); ?></h3>
-                                    <p><?php esc_html_e('Your license is active and all features are enabled', 'woocommerce-commeriq'); ?></p>
+                                    <h3><?php esc_html_e('License Active', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h3>
+                                    <p><?php esc_html_e('Your license is active and all features are enabled', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></p>
                                 </div>
                             </div>
                             <div class="commeriq-license-actions">
                                 <button type="button" class="button button-secondary" id="commeriq-modify-license-btn">
                                     <span class="dashicons dashicons-edit"></span>
-                                    <?php esc_html_e('Modify', 'woocommerce-commeriq'); ?>
+                                    <?php esc_html_e('Modify', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>
                                 </button>
                                 <button type="button" class="button button-link-delete" id="commeriq-remove-license-btn">
                                     <span class="dashicons dashicons-trash"></span>
-                                    <?php esc_html_e('Remove', 'woocommerce-commeriq'); ?>
+                                    <?php esc_html_e('Remove', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>
                                 </button>
                             </div>
                         </div>
@@ -71,21 +71,21 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                             <div class="commeriq-detail-item">
                                 <span class="commeriq-detail-icon">🔑</span>
                                 <div class="commeriq-detail-content">
-                                    <span class="commeriq-detail-label"><?php esc_html_e('License Key', 'woocommerce-commeriq'); ?></span>
+                                    <span class="commeriq-detail-label"><?php esc_html_e('License Key', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                     <span class="commeriq-detail-value"><?php echo esc_html($commeriq_licence_key); ?></span>
                                 </div>
                             </div>
                             <div class="commeriq-detail-item">
                                 <span class="commeriq-detail-icon">🌐</span>
                                 <div class="commeriq-detail-content">
-                                    <span class="commeriq-detail-label"><?php esc_html_e('Domain', 'woocommerce-commeriq'); ?></span>
+                                    <span class="commeriq-detail-label"><?php esc_html_e('Domain', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                     <span class="commeriq-detail-value"><?php echo esc_html($commeriq_domain_name); ?></span>
                                 </div>
                             </div>
                             <div class="commeriq-detail-item">
                                 <span class="commeriq-detail-icon">📅</span>
                                 <div class="commeriq-detail-content">
-                                    <span class="commeriq-detail-label"><?php esc_html_e('Activated On', 'woocommerce-commeriq'); ?></span>
+                                    <span class="commeriq-detail-label"><?php esc_html_e('Activated On', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                     <span class="commeriq-detail-value"><?php echo esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), strtotime($commeriq_activated_at))); ?></span>
                                 </div>
                             </div>
@@ -93,23 +93,23 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
 
                         <!-- Features Showcase -->
                         <div class="commeriq-features-showcase">
-                            <h4><?php esc_html_e('Active Features', 'woocommerce-commeriq'); ?></h4>
+                            <h4><?php esc_html_e('Active Features', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h4>
                             <div class="commeriq-features-list">
                                 <div class="commeriq-feature-item">
                                     <span class="commeriq-feature-icon">📊</span>
-                                    <span><?php esc_html_e('Price Comparison', 'woocommerce-commeriq'); ?></span>
+                                    <span><?php esc_html_e('Price Comparison', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 </div>
                                 <div class="commeriq-feature-item">
                                     <span class="commeriq-feature-icon">✍️</span>
-                                    <span><?php esc_html_e('AI Descriptions', 'woocommerce-commeriq'); ?></span>
+                                    <span><?php esc_html_e('AI Descriptions', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 </div>
                                 <div class="commeriq-feature-item">
                                     <span class="commeriq-feature-icon">🖼️</span>
-                                    <span><?php esc_html_e('Image Generation', 'woocommerce-commeriq'); ?></span>
+                                    <span><?php esc_html_e('Image Generation', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 </div>
                                 <div class="commeriq-feature-item">
                                     <span class="commeriq-feature-icon">💹</span>
-                                    <span><?php esc_html_e('Margin Analytics', 'woocommerce-commeriq'); ?></span>
+                                    <span><?php esc_html_e('Margin Analytics', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 </div>
                             </div>
                         </div>
@@ -123,8 +123,8 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                                     <span class="dashicons dashicons-edit"></span>
                                 </span>
                                 <div class="commeriq-status-text">
-                                    <h3><?php esc_html_e('Modify License', 'woocommerce-commeriq'); ?></h3>
-                                    <p><?php esc_html_e('Update your license key or domain', 'woocommerce-commeriq'); ?></p>
+                                    <h3><?php esc_html_e('Modify License', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h3>
+                                    <p><?php esc_html_e('Update your license key or domain', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></p>
                                 </div>
                             </div>
                         </div>
@@ -133,21 +133,21 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                             <?php wp_nonce_field('commeriq_license_nonce', 'commeriq_license_nonce'); ?>
                             <div class="commeriq-form-grid">
                                 <div class="commeriq-form-field">
-                                    <label for="modify_licence_key"><?php esc_html_e('License Key', 'woocommerce-commeriq'); ?></label>
-                                    <input type="text" id="modify_licence_key" name="licence_key" value="<?php echo esc_attr($commeriq_licence_key); ?>" placeholder="<?php esc_attr_e('Enter your license key', 'woocommerce-commeriq'); ?>" required>
+                                    <label for="modify_licence_key"><?php esc_html_e('License Key', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></label>
+                                    <input type="text" id="modify_licence_key" name="licence_key" value="<?php echo esc_attr($commeriq_licence_key); ?>" placeholder="<?php esc_attr_e('Enter your license key', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>" required>
                                 </div>
                                 <div class="commeriq-form-field">
-                                    <label for="modify_domain_name"><?php esc_html_e('Domain', 'woocommerce-commeriq'); ?></label>
-                                    <input type="text" id="modify_domain_name" name="domain_name" value="<?php echo esc_attr($commeriq_domain_name); ?>" placeholder="<?php esc_attr_e('example.com', 'woocommerce-commeriq'); ?>" required>
+                                    <label for="modify_domain_name"><?php esc_html_e('Domain', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></label>
+                                    <input type="text" id="modify_domain_name" name="domain_name" value="<?php echo esc_attr($commeriq_domain_name); ?>" placeholder="<?php esc_attr_e('example.com', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>" required>
                                 </div>
                             </div>
                             <div class="commeriq-form-actions">
                                 <button type="submit" class="button button-primary button-large">
                                     <span class="dashicons dashicons-saved"></span>
-                                    <?php esc_html_e('Update License', 'woocommerce-commeriq'); ?>
+                                    <?php esc_html_e('Update License', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>
                                 </button>
                                 <button type="button" class="button button-secondary button-large" id="commeriq-cancel-modify-btn">
-                                    <?php esc_html_e('Cancel', 'woocommerce-commeriq'); ?>
+                                    <?php esc_html_e('Cancel', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>
                                 </button>
                             </div>
                         </form>
@@ -162,13 +162,13 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                                     <span class="dashicons dashicons-lock"></span>
                                 </span>
                                 <div class="commeriq-status-text">
-                                    <h3><?php esc_html_e('Activate Your License', 'woocommerce-commeriq'); ?></h3>
-                                    <p><?php esc_html_e('Enter your license key to unlock all AI-powered features', 'woocommerce-commeriq'); ?></p>
+                                    <h3><?php esc_html_e('Activate Your License', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h3>
+                                    <p><?php esc_html_e('Enter your license key to unlock all AI-powered features', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></p>
                                 </div>
                             </div>
                             <a href="https://myapps.wontonee.com" target="_blank" rel="noopener noreferrer" class="button button-primary">
                                 <span class="dashicons dashicons-external"></span>
-                                <?php esc_html_e('Get License', 'woocommerce-commeriq'); ?>
+                                <?php esc_html_e('Get License', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>
                             </a>
                         </div>
                         
@@ -176,47 +176,47 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                             <?php wp_nonce_field('commeriq_license_nonce', 'commeriq_license_nonce'); ?>
                             <div class="commeriq-form-grid">
                                 <div class="commeriq-form-field">
-                                    <label for="licence_key"><?php esc_html_e('License Key', 'woocommerce-commeriq'); ?></label>
-                                    <input type="text" id="licence_key" name="licence_key" placeholder="<?php esc_attr_e('Enter your license key', 'woocommerce-commeriq'); ?>" required>
-                                    <span class="commeriq-field-hint"><?php esc_html_e('Your unique license key from myapps.wontonee.com', 'woocommerce-commeriq'); ?></span>
+                                    <label for="licence_key"><?php esc_html_e('License Key', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></label>
+                                    <input type="text" id="licence_key" name="licence_key" placeholder="<?php esc_attr_e('Enter your license key', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>" required>
+                                    <span class="commeriq-field-hint"><?php esc_html_e('Your unique license key from myapps.wontonee.com', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 </div>
                                 <div class="commeriq-form-field">
-                                    <label for="domain_name"><?php esc_html_e('Domain', 'woocommerce-commeriq'); ?></label>
-                                    <input type="text" id="domain_name" name="domain_name" value="<?php echo esc_attr($commeriq_current_domain); ?>" placeholder="<?php esc_attr_e('example.com', 'woocommerce-commeriq'); ?>" required>
-                                    <span class="commeriq-field-hint"><?php esc_html_e('The domain where this license will be activated', 'woocommerce-commeriq'); ?></span>
+                                    <label for="domain_name"><?php esc_html_e('Domain', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></label>
+                                    <input type="text" id="domain_name" name="domain_name" value="<?php echo esc_attr($commeriq_current_domain); ?>" placeholder="<?php esc_attr_e('example.com', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>" required>
+                                    <span class="commeriq-field-hint"><?php esc_html_e('The domain where this license will be activated', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 </div>
                             </div>
                             <div class="commeriq-form-actions">
                                 <button type="submit" class="button button-primary button-hero">
                                     <span class="dashicons dashicons-yes-alt"></span>
-                                    <?php esc_html_e('Activate License', 'woocommerce-commeriq'); ?>
+                                    <?php esc_html_e('Activate License', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>
                                 </button>
                             </div>
                         </form>
 
                         <!-- Features Preview -->
                         <div class="commeriq-features-preview">
-                            <h4><?php esc_html_e('Unlock These Features', 'woocommerce-commeriq'); ?></h4>
+                            <h4><?php esc_html_e('Unlock These Features', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h4>
                             <div class="commeriq-features-grid">
                                 <div class="commeriq-feature-card">
                                     <div class="commeriq-feature-icon">📊</div>
-                                    <h5><?php esc_html_e('Price Comparison', 'woocommerce-commeriq'); ?></h5>
-                                    <p><?php esc_html_e('Compare your prices with competitors across multiple platforms', 'woocommerce-commeriq'); ?></p>
+                                    <h5><?php esc_html_e('Price Comparison', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h5>
+                                    <p><?php esc_html_e('Compare your prices with competitors across multiple platforms', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></p>
                                 </div>
                                 <div class="commeriq-feature-card">
                                     <div class="commeriq-feature-icon">✍️</div>
-                                    <h5><?php esc_html_e('AI Content Generation', 'woocommerce-commeriq'); ?></h5>
-                                    <p><?php esc_html_e('Generate compelling product descriptions automatically', 'woocommerce-commeriq'); ?></p>
+                                    <h5><?php esc_html_e('AI Content Generation', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h5>
+                                    <p><?php esc_html_e('Generate compelling product descriptions automatically', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></p>
                                 </div>
                                 <div class="commeriq-feature-card">
                                     <div class="commeriq-feature-icon">🖼️</div>
-                                    <h5><?php esc_html_e('AI Image Generation', 'woocommerce-commeriq'); ?></h5>
-                                    <p><?php esc_html_e('Create stunning product images with AI technology', 'woocommerce-commeriq'); ?></p>
+                                    <h5><?php esc_html_e('AI Image Generation', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h5>
+                                    <p><?php esc_html_e('Create stunning product images with AI technology', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></p>
                                 </div>
                                 <div class="commeriq-feature-card">
                                     <div class="commeriq-feature-icon">💹</div>
-                                    <h5><?php esc_html_e('Margin Analytics', 'woocommerce-commeriq'); ?></h5>
-                                    <p><?php esc_html_e('Optimize your pricing strategy with smart analytics', 'woocommerce-commeriq'); ?></p>
+                                    <h5><?php esc_html_e('Margin Analytics', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h5>
+                                    <p><?php esc_html_e('Optimize your pricing strategy with smart analytics', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></p>
                                 </div>
                             </div>
                         </div>
@@ -255,8 +255,8 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
             
             <div class="commeriq-store-analyzer">
                 <div class="commeriq-page-header">
-                    <h2 class="commeriq-page-header-title"><?php esc_html_e('Store Analyzer', 'woocommerce-commeriq'); ?></h2>
-                    <p><?php esc_html_e('Comprehensive analysis of your WooCommerce store configuration and statistics', 'woocommerce-commeriq'); ?></p>
+                    <h2 class="commeriq-page-header-title"><?php esc_html_e('Store Analyzer', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h2>
+                    <p><?php esc_html_e('Comprehensive analysis of your WooCommerce store configuration and statistics', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></p>
                 </div>
                 
                 <!-- Quick Stats -->
@@ -265,7 +265,7 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                         <div class="commeriq-stat-icon">📦</div>
                         <div class="commeriq-stat-content">
                             <div class="commeriq-stat-value"><?php echo esc_html($commeriq_store_data['products_count'] ?? 0); ?></div>
-                            <div class="commeriq-stat-label"><?php esc_html_e('Products', 'woocommerce-commeriq'); ?></div>
+                            <div class="commeriq-stat-label"><?php esc_html_e('Products', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></div>
                         </div>
                     </div>
                     
@@ -273,7 +273,7 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                         <div class="commeriq-stat-icon">💰</div>
                         <div class="commeriq-stat-content">
                             <div class="commeriq-stat-value"><?php echo esc_html($commeriq_store_data['currency'] ?? 'N/A'); ?></div>
-                            <div class="commeriq-stat-label"><?php esc_html_e('Currency', 'woocommerce-commeriq'); ?></div>
+                            <div class="commeriq-stat-label"><?php esc_html_e('Currency', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></div>
                         </div>
                     </div>
                     
@@ -281,7 +281,7 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                         <div class="commeriq-stat-icon">🌍</div>
                         <div class="commeriq-stat-content">
                             <div class="commeriq-stat-value"><?php echo esc_html($commeriq_store_data['country'] ?? 'N/A'); ?></div>
-                            <div class="commeriq-stat-label"><?php esc_html_e('Country', 'woocommerce-commeriq'); ?></div>
+                            <div class="commeriq-stat-label"><?php esc_html_e('Country', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></div>
                         </div>
                     </div>
                     
@@ -289,7 +289,7 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                         <div class="commeriq-stat-icon">🛠️</div>
                         <div class="commeriq-stat-content">
                             <div class="commeriq-stat-value"><?php echo esc_html($commeriq_store_data['wc_version'] ?? 'N/A'); ?></div>
-                            <div class="commeriq-stat-label"><?php esc_html_e('WooCommerce', 'woocommerce-commeriq'); ?></div>
+                            <div class="commeriq-stat-label"><?php esc_html_e('WooCommerce', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></div>
                         </div>
                     </div>
                 </div>
@@ -300,28 +300,28 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                     <div class="commeriq-info-card">
                         <div class="commeriq-info-header">
                             <span class="dashicons dashicons-location"></span>
-                            <h3><?php esc_html_e('Location Information', 'woocommerce-commeriq'); ?></h3>
+                            <h3><?php esc_html_e('Location Information', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h3>
                         </div>
                         <div class="commeriq-info-body">
                             <div class="commeriq-info-row">
-                                <span class="commeriq-info-label"><?php esc_html_e('Country', 'woocommerce-commeriq'); ?></span>
-                                <span class="commeriq-info-value"><?php echo esc_html($commeriq_store_data['country'] ?: __('Not Set', 'woocommerce-commeriq')); ?></span>
+                                <span class="commeriq-info-label"><?php esc_html_e('Country', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html($commeriq_store_data['country'] ?: __('Not Set', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?></span>
                             </div>
                             <div class="commeriq-info-row">
-                                <span class="commeriq-info-label"><?php esc_html_e('State/Region', 'woocommerce-commeriq'); ?></span>
-                                <span class="commeriq-info-value"><?php echo esc_html($commeriq_store_data['state'] ?: __('Not Set', 'woocommerce-commeriq')); ?></span>
+                                <span class="commeriq-info-label"><?php esc_html_e('State/Region', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html($commeriq_store_data['state'] ?: __('Not Set', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?></span>
                             </div>
                             <div class="commeriq-info-row">
-                                <span class="commeriq-info-label"><?php esc_html_e('City', 'woocommerce-commeriq'); ?></span>
-                                <span class="commeriq-info-value"><?php echo esc_html($commeriq_store_data['city'] ?: __('Not Set', 'woocommerce-commeriq')); ?></span>
+                                <span class="commeriq-info-label"><?php esc_html_e('City', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html($commeriq_store_data['city'] ?: __('Not Set', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?></span>
                             </div>
                             <div class="commeriq-info-row">
-                                <span class="commeriq-info-label"><?php esc_html_e('Postal Code', 'woocommerce-commeriq'); ?></span>
-                                <span class="commeriq-info-value"><?php echo esc_html($commeriq_store_data['postcode'] ?: __('Not Set', 'woocommerce-commeriq')); ?></span>
+                                <span class="commeriq-info-label"><?php esc_html_e('Postal Code', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
+                                <span class="commeriq-info-value"><?php echo esc_html($commeriq_store_data['postcode'] ?: __('Not Set', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?></span>
                             </div>
                             <?php if (!empty($commeriq_store_data['address'])): ?>
                             <div class="commeriq-info-row">
-                                <span class="commeriq-info-label"><?php esc_html_e('Address', 'woocommerce-commeriq'); ?></span>
+                                <span class="commeriq-info-label"><?php esc_html_e('Address', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 <span class="commeriq-info-value"><?php echo esc_html($commeriq_store_data['address']); ?></span>
                             </div>
                             <?php endif; ?>
@@ -332,24 +332,24 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                     <div class="commeriq-info-card">
                         <div class="commeriq-info-header">
                             <span class="dashicons dashicons-money-alt"></span>
-                            <h3><?php esc_html_e('Currency & Financial', 'woocommerce-commeriq'); ?></h3>
+                            <h3><?php esc_html_e('Currency & Financial', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h3>
                         </div>
                         <div class="commeriq-info-body">
                             <div class="commeriq-info-row">
-                                <span class="commeriq-info-label"><?php esc_html_e('Currency Code', 'woocommerce-commeriq'); ?></span>
+                                <span class="commeriq-info-label"><?php esc_html_e('Currency Code', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 <span class="commeriq-info-value"><?php echo esc_html($commeriq_store_data['currency'] ?: 'USD'); ?></span>
                             </div>
                             <div class="commeriq-info-row">
-                                <span class="commeriq-info-label"><?php esc_html_e('Currency Symbol', 'woocommerce-commeriq'); ?></span>
+                                <span class="commeriq-info-label"><?php esc_html_e('Currency Symbol', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 <span class="commeriq-info-value"><?php echo esc_html($commeriq_store_data['currency_symbol'] ?: '$'); ?></span>
                             </div>
                             <div class="commeriq-info-row">
-                                <span class="commeriq-info-label"><?php esc_html_e('Tax Calculation', 'woocommerce-commeriq'); ?></span>
+                                <span class="commeriq-info-label"><?php esc_html_e('Tax Calculation', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 <span class="commeriq-info-value">
                                     <?php if ($commeriq_store_data['tax_enabled']): ?>
-                                        <span class="commeriq-badge commeriq-badge-success"><?php esc_html_e('Enabled', 'woocommerce-commeriq'); ?></span>
+                                        <span class="commeriq-badge commeriq-badge-success"><?php esc_html_e('Enabled', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                     <?php else: ?>
-                                        <span class="commeriq-badge commeriq-badge-default"><?php esc_html_e('Disabled', 'woocommerce-commeriq'); ?></span>
+                                        <span class="commeriq-badge commeriq-badge-default"><?php esc_html_e('Disabled', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                     <?php endif; ?>
                                 </span>
                             </div>
@@ -360,15 +360,15 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                     <div class="commeriq-info-card">
                         <div class="commeriq-info-header">
                             <span class="dashicons dashicons-chart-bar"></span>
-                            <h3><?php esc_html_e('Measurement Units', 'woocommerce-commeriq'); ?></h3>
+                            <h3><?php esc_html_e('Measurement Units', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h3>
                         </div>
                         <div class="commeriq-info-body">
                             <div class="commeriq-info-row">
-                                <span class="commeriq-info-label"><?php esc_html_e('Weight Unit', 'woocommerce-commeriq'); ?></span>
+                                <span class="commeriq-info-label"><?php esc_html_e('Weight Unit', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 <span class="commeriq-info-value"><?php echo esc_html(strtoupper($commeriq_store_data['weight_unit'])); ?></span>
                             </div>
                             <div class="commeriq-info-row">
-                                <span class="commeriq-info-label"><?php esc_html_e('Dimension Unit', 'woocommerce-commeriq'); ?></span>
+                                <span class="commeriq-info-label"><?php esc_html_e('Dimension Unit', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></span>
                                 <span class="commeriq-info-value"><?php echo esc_html(strtoupper($commeriq_store_data['dimension_unit'])); ?></span>
                             </div>
                         </div>
@@ -378,11 +378,11 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                 <div class="commeriq-form-actions" style="margin-top: 16px;">
                     <button type="button" class="button button-secondary" id="commeriq-refresh-store">
                         <span class="dashicons dashicons-update" style="margin-top: 3px;"></span>
-                        <?php esc_html_e('Refresh Data', 'woocommerce-commeriq'); ?>
+                        <?php esc_html_e('Refresh Data', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>
                     </button>
                     <a href="<?php echo esc_url(admin_url('admin.php?page=wc-settings')); ?>" class="button">
                         <span class="dashicons dashicons-admin-settings" style="margin-top: 3px;"></span>
-                        <?php esc_html_e('WooCommerce Settings', 'woocommerce-commeriq'); ?>
+                        <?php esc_html_e('WooCommerce Settings', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?>
                     </a>
                 </div>
             </div>
@@ -396,12 +396,12 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
     <div class="commeriq-modal-dialog">
         <div class="commeriq-modal-content">
             <div class="commeriq-modal-icon" id="commeriq-modal-icon">⌛</div>
-            <h3 id="commeriq-modal-title"><?php esc_html_e('Processing', 'woocommerce-commeriq'); ?></h3>
-            <p id="commeriq-modal-message"><?php esc_html_e('Please wait...', 'woocommerce-commeriq'); ?></p>
+            <h3 id="commeriq-modal-title"><?php esc_html_e('Processing', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></h3>
+            <p id="commeriq-modal-message"><?php esc_html_e('Please wait...', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></p>
             <div class="commeriq-modal-actions">
-                <button type="button" class="button button-primary" id="commeriq-modal-close" style="display:none;"><?php esc_html_e('Close', 'woocommerce-commeriq'); ?></button>
-                <button type="button" class="button" id="commeriq-modal-cancel" style="display:none;"><?php esc_html_e('Cancel', 'woocommerce-commeriq'); ?></button>
-                <button type="button" class="button button-primary" id="commeriq-modal-confirm" style="display:none;"><?php esc_html_e('Confirm', 'woocommerce-commeriq'); ?></button>
+                <button type="button" class="button button-primary" id="commeriq-modal-close" style="display:none;"><?php esc_html_e('Close', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></button>
+                <button type="button" class="button" id="commeriq-modal-cancel" style="display:none;"><?php esc_html_e('Cancel', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></button>
+                <button type="button" class="button button-primary" id="commeriq-modal-confirm" style="display:none;"><?php esc_html_e('Confirm', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></button>
             </div>
         </div>
     </div>
@@ -417,7 +417,7 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
             
             // Check if tab is disabled
             if ($tab.hasClass('nav-tab-disabled') || $tab.data('disabled') === '1') {
-                commeriqShowModal('⚠️', '<?php echo esc_js(__('License Required', 'woocommerce-commeriq')); ?>', '<?php echo esc_js(__('Please activate your license to access this feature.', 'woocommerce-commeriq')); ?>', true);
+                commeriqShowModal('⚠️', '<?php echo esc_js(__('License Required', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', '<?php echo esc_js(__('Please activate your license to access this feature.', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', true);
                 return;
             }
             
@@ -453,11 +453,11 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
         $('#commeriq-remove-license-btn').on('click', function(){
             commeriqShowConfirmModal(
                 '⚠️',
-                '<?php echo esc_js(__('Remove License?', 'woocommerce-commeriq')); ?>',
-                '<?php echo esc_js(__('Are you sure you want to remove your license? This will disable all CommerIQ features.', 'woocommerce-commeriq')); ?>',
+                '<?php echo esc_js(__('Remove License?', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>',
+                '<?php echo esc_js(__('Are you sure you want to remove your license? This will disable all CommerIQ features.', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>',
                 function() {
                     // User confirmed, proceed with removal
-                    commeriqShowModal('⌛', '<?php echo esc_js(__('Processing', 'woocommerce-commeriq')); ?>', '<?php echo esc_js(__('Removing license...', 'woocommerce-commeriq')); ?>', false);
+                    commeriqShowModal('⌛', '<?php echo esc_js(__('Processing', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', '<?php echo esc_js(__('Removing license...', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', false);
                     
                     $.ajax({
                         url: commeriqAdmin.ajax_url,
@@ -468,14 +468,14 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                         },
                         success: function(response){
                             if (response.success) {
-                                commeriqShowModal('✅', '<?php echo esc_js(__('Success', 'woocommerce-commeriq')); ?>', response.data.message || '<?php echo esc_js(__('License removed successfully', 'woocommerce-commeriq')); ?>', true);
+                                commeriqShowModal('✅', '<?php echo esc_js(__('Success', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', response.data.message || '<?php echo esc_js(__('License removed successfully', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', true);
                                 setTimeout(function(){ location.reload(); }, 2000);
                             } else {
-                                commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'woocommerce-commeriq')); ?>', response.data.message || '<?php echo esc_js(__('Failed to remove license', 'woocommerce-commeriq')); ?>', true);
+                                commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', response.data.message || '<?php echo esc_js(__('Failed to remove license', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', true);
                             }
                         },
                         error: function(){
-                            commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'woocommerce-commeriq')); ?>', '<?php echo esc_js(__('Connection failed', 'woocommerce-commeriq')); ?>', true);
+                            commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', '<?php echo esc_js(__('Connection failed', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', true);
                         }
                     });
                 }
@@ -494,12 +494,12 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
             const domainName = $form.find('[name="domain_name"]').val().trim();
             
             if (!licenceKey || !domainName) {
-                commeriqShowModal('⚠️', '<?php echo esc_js(__('Validation Error', 'woocommerce-commeriq')); ?>', '<?php echo esc_js(__('Please fill in all fields', 'woocommerce-commeriq')); ?>', true);
+                commeriqShowModal('⚠️', '<?php echo esc_js(__('Validation Error', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', '<?php echo esc_js(__('Please fill in all fields', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', true);
                 return;
             }
             
-            $submitBtn.prop('disabled', true).html('<span class="dashicons dashicons-update" style="animation: rotation 2s infinite linear;"></span> <?php echo esc_js(__('Processing...', 'woocommerce-commeriq')); ?>');
-            commeriqShowModal('⌛', '<?php echo esc_js(__('Processing', 'woocommerce-commeriq')); ?>', '<?php echo esc_js(__('Activating your license...', 'woocommerce-commeriq')); ?>', false);
+            $submitBtn.prop('disabled', true).html('<span class="dashicons dashicons-update" style="animation: rotation 2s infinite linear;"></span> <?php echo esc_js(__('Processing...', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>');
+            commeriqShowModal('⌛', '<?php echo esc_js(__('Processing', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', '<?php echo esc_js(__('Activating your license...', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', false);
             
             $.ajax({
                 url: commeriqAdmin.ajax_url,
@@ -512,21 +512,21 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                 },
                 success: function(response){
                     if (response.success) {
-                        commeriqShowModal('✅', '<?php echo esc_js(__('Success!', 'woocommerce-commeriq')); ?>', response.data.message || '<?php echo esc_js(__('License activated successfully', 'woocommerce-commeriq')); ?>', true);
+                        commeriqShowModal('✅', '<?php echo esc_js(__('Success!', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', response.data.message || '<?php echo esc_js(__('License activated successfully', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', true);
                         setTimeout(function(){ location.reload(); }, 2000);
                     } else {
-                        commeriqShowModal('⚠️', '<?php echo esc_js(__('Activation Failed', 'woocommerce-commeriq')); ?>', response.data.message || '<?php echo esc_js(__('Failed to activate license', 'woocommerce-commeriq')); ?>', true);
+                        commeriqShowModal('⚠️', '<?php echo esc_js(__('Activation Failed', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', response.data.message || '<?php echo esc_js(__('Failed to activate license', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', true);
                         $submitBtn.prop('disabled', false).html(originalHtml);
                     }
                 },
                 error: function(xhr){
-                    let errorMessage = '<?php echo esc_js(__('Connection failed', 'woocommerce-commeriq')); ?>';
+                    let errorMessage = '<?php echo esc_js(__('Connection failed', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>';
                     
                     if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
                         errorMessage = xhr.responseJSON.data.message;
                     }
                     
-                    commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'woocommerce-commeriq')); ?>', errorMessage, true);
+                    commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', errorMessage, true);
                     $submitBtn.prop('disabled', false).html(originalHtml);
                 }
             });
@@ -538,7 +538,7 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
             const $btn = $(this);
             const originalHtml = $btn.html();
             
-            $btn.prop('disabled', true).html('<span class="dashicons dashicons-update" style="margin-top: 3px; animation: rotation 2s infinite linear;"></span><?php echo esc_js(__('Refreshing...', 'woocommerce-commeriq')); ?>');
+            $btn.prop('disabled', true).html('<span class="dashicons dashicons-update" style="margin-top: 3px; animation: rotation 2s infinite linear;"></span><?php echo esc_js(__('Refreshing...', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>');
             
             $.ajax({
                 url: commeriqAdmin.ajax_url,
@@ -550,15 +550,15 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                 success: function(response){
                     $btn.prop('disabled', false).html(originalHtml);
                     if (response.success) {
-                        commeriqShowModal('✅', '<?php echo esc_js(__('Success', 'woocommerce-commeriq')); ?>', '<?php echo esc_js(__('Store data refreshed', 'woocommerce-commeriq')); ?>', true);
+                        commeriqShowModal('✅', '<?php echo esc_js(__('Success', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', '<?php echo esc_js(__('Store data refreshed', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', true);
                         setTimeout(function(){ location.reload(); }, 1500);
                     } else {
-                        commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'woocommerce-commeriq')); ?>', '<?php echo esc_js(__('Failed to refresh data', 'woocommerce-commeriq')); ?>', true);
+                        commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', '<?php echo esc_js(__('Failed to refresh data', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', true);
                     }
                 },
                 error: function(){
                     $btn.prop('disabled', false).html(originalHtml);
-                    commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'woocommerce-commeriq')); ?>', '<?php echo esc_js(__('Connection failed', 'woocommerce-commeriq')); ?>', true);
+                    commeriqShowModal('⚠️', '<?php echo esc_js(__('Error', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', '<?php echo esc_js(__('Connection failed', 'commeriq-ai-powered-commerce-insights-for-woocommerce')); ?>', true);
                 }
             });
         });
