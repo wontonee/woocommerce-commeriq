@@ -196,7 +196,7 @@ class ProductEditor
                                 <span class="dashicons dashicons-format-image" style="vertical-align:middle;"></span>
                                 <?php esc_html_e('Generate Image', 'commeriq'); ?>
                             </button>
-                            <button type="button" class="button commeriq-modal-close" style="margin-left:10px;">
+                            <button type="button" class="button commeriq-icon-button commeriq-modal-close" style="margin-left:10px;">
                                 <?php esc_html_e('Cancel', 'commeriq'); ?>
                             </button>
                         </div>

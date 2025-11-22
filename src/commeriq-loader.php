@@ -75,7 +75,7 @@ class Loader
         wp_enqueue_style('dashicons');
         
         // Always load common styles (modals, buttons, icons)
-        wp_enqueue_style('commeriq-admin-common', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin-common.css', ['dashicons'], COMMERIQ_VERSION . '.3');
+        wp_enqueue_style('commeriq-admin-common', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin-common.css', ['dashicons'], COMMERIQ_VERSION . '.5');
         
         // Load context-specific styles
         if (strpos($hook, 'commeriq-settings') !== false) {
@@ -83,7 +83,7 @@ class Loader
             wp_enqueue_style('commeriq-admin-settings', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin-settings.css', ['commeriq-admin-common'], COMMERIQ_VERSION . '.' . time());
         } else {
             // Product editor and other admin pages
-            wp_enqueue_style('commeriq-admin-product', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin-product.css', ['commeriq-admin-common'], COMMERIQ_VERSION . '.3');
+            wp_enqueue_style('commeriq-admin-product', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin-product.css', ['commeriq-admin-common'], COMMERIQ_VERSION . '.5');
         }
         
         wp_enqueue_script('commeriq-admin', COMMERIQ_PLUGIN_URL . 'assets/js/commeriq-admin.js', ['jquery'], COMMERIQ_VERSION . '.7', true);

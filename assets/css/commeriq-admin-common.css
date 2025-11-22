@@ -3,49 +3,50 @@
 /* Modal Styles (used in both product editor and settings page) */
 #commeriq-comparison-modal,
 #commeriq-ai-modal,
-#commeriq-ai-image-modal { 
-    position: fixed; 
-    left: 0; 
-    top: 0; 
-    right: 0; 
-    bottom: 0; 
-    z-index: 9999; 
-    display: none; 
-    overflow-y: auto;
+#commeriq-ai-image-modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: none;
     padding: 20px;
     box-sizing: border-box;
+    /* Center modal content vertically and horizontally when shown */
+    align-items: center;
+    justify-content: center;
 }
 
 #commeriq-comparison-modal.show,
 #commeriq-ai-modal.show,
-#commeriq-ai-image-modal.show { 
-    display: block; 
+#commeriq-ai-image-modal.show {
+    display: flex;
 }
 
 .commeriq-modal-backdrop,
-.commeriq-modal-overlay { 
-    position: fixed; 
-    left: 0; 
-    top: 0; 
-    right: 0; 
-    bottom: 0; 
-    background: rgba(0, 0, 0, 0.7); 
-    z-index: -1; 
+.commeriq-modal-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1;
 }
 
 .commeriq-modal-dialog,
-.commeriq-modal-content { 
-    position: relative; 
-    width: 90%; 
-    max-width: 1200px; 
-    margin: 0 auto; 
-    background: #fff; 
-    border-radius: 8px; 
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); 
-    padding: 0; 
+.commeriq-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    padding: 0;
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - 40px);
+    max-height: 90vh;
 }
 
 /* Smaller width for AI content modal */
@@ -54,12 +55,12 @@
     max-width: 700px;
 }
 
-.commeriq-modal-header { 
-    padding: 20px 24px; 
-    border-bottom: 2px solid #e5e5e5; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
+.commeriq-modal-header {
+    padding: 20px 24px;
+    border-bottom: 2px solid #e5e5e5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     flex-shrink: 0;
     background: #fff;
     z-index: 10;
@@ -73,24 +74,24 @@
     color: #1e1e1e;
 }
 
-.commeriq-modal-body { 
-    padding: 24px; 
+.commeriq-modal-body {
+    padding: 24px;
     flex: 1 1 auto;
     overflow-y: auto;
     max-height: calc(100vh - 200px);
 }
 
-.commeriq-modal-footer { 
-    padding: 16px 24px; 
-    border-top: 2px solid #e5e5e5; 
-    text-align: right; 
+.commeriq-modal-footer {
+    padding: 16px 24px;
+    border-top: 2px solid #e5e5e5;
+    text-align: right;
     flex-shrink: 0;
     background: #f9f9f9;
     z-index: 10;
     border-radius: 0 0 8px 8px;
 }
 
-.commeriq-modal-close { 
+.commeriq-modal-close {
     background: transparent;
     border: 0;
     font-size: 28px;
@@ -230,36 +231,36 @@
     flex-shrink: 0;
 }
 
-.commeriq-icon-button:focus { 
-    outline: 2px solid #5b9dd9; 
-    outline-offset: 2px; 
+.commeriq-icon-button:focus {
+    outline: 2px solid #5b9dd9;
+    outline-offset: 2px;
 }
 
 /* Gemini inline SVG sizing */
-.commeriq-gemini-icon { 
-    width: 18px; 
-    height: 18px; 
-    margin-right: 8px; 
-    display: inline-block; 
+.commeriq-gemini-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    display: inline-block;
     vertical-align: middle;
 }
 
-.commeriq-ai-svg { 
-    width: 18px; 
-    height: 18px; 
-    margin-right: 8px; 
-    display: inline-block; 
+.commeriq-ai-svg {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    display: inline-block;
     vertical-align: middle;
 }
 
-.commeriq-ai-svg rect, 
-.commeriq-ai-svg circle, 
-.commeriq-ai-svg path { 
-    vector-effect: non-scaling-stroke; 
+.commeriq-ai-svg rect,
+.commeriq-ai-svg circle,
+.commeriq-ai-svg path {
+    vector-effect: non-scaling-stroke;
 }
 
-.commeriq-ai-svg rect { 
-    stroke-linejoin: round; 
+.commeriq-ai-svg rect {
+    stroke-linejoin: round;
 }
 
 /* Dashicons override */
@@ -267,21 +268,21 @@
     content: "\f463";
 }
 
-.dashicons-update { 
-    font-size: 18px; 
-    line-height: 1; 
-    display: inline-block; 
+.dashicons-update {
+    font-size: 18px;
+    line-height: 1;
+    display: inline-block;
     vertical-align: middle;
 }
 
-.commeriq-icon-button .dashicons-update:before { 
-    content: "\f463"; 
+.commeriq-icon-button .dashicons-update:before {
+    content: "\f463";
 }
 
 /* AI icon color tweak */
-.commeriq-icon-button .dashicons.ai-icon { 
-    color: #2271b1; 
-    font-size: 18px; 
+.commeriq-icon-button .dashicons.ai-icon {
+    color: #2271b1;
+    font-size: 18px;
 }
 
 /* AI Image Button Styling - Remove focus/active outline */
@@ -336,6 +337,12 @@
     background: #2271b1 !important;
     color: #fff !important;
     border-color: #2271b1 !important;
+    line-height: 1.5 !important;
+    vertical-align: middle !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 36px !important;
 }
 
 #commeriq-ai-modal-confirm:hover {
@@ -347,6 +354,12 @@
     background: #fff !important;
     color: #2271b1 !important;
     border-color: #2271b1 !important;
+    line-height: 1.5 !important;
+    vertical-align: middle !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 36px !important;
 }
 
 #commeriq-ai-modal-cancel:hover {
@@ -357,6 +370,12 @@
     background: #2271b1 !important;
     color: #fff !important;
     border-color: #2271b1 !important;
+    line-height: 1.5 !important;
+    vertical-align: middle !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 36px !important;
 }
 
 #commeriq-ai-modal-ok:hover {
@@ -369,6 +388,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(359deg);
     }
@@ -380,7 +400,7 @@
         width: 95%;
         max-height: 90vh;
     }
-    
+
     .commeriq-price-options {
         grid-template-columns: 1fr !important;
     }

@@ -1,4 +1,9 @@
 (function (window, $) {
+    // Helper function to show modal with proper flexbox display for centering
+    function showModal($modal) {
+        $modal.css('display', 'flex').hide().fadeIn(200);
+    }
+
     // Reusable modal notification function
     function showNotification(message, type) {
         type = type || 'info';
@@ -9,8 +14,7 @@
             type === 'error' ? '#dc3232' :
                 '#2271b1';
 
-        var modalHtml = '<div id="commeriq-notification-modal" class="commeriq-modal" style="display:block;">' +
-            '<div class="commeriq-modal-overlay"></div>' +
+        var modalHtml = '<div id="commeriq-notification-modal" class="commeriq-modal" style="display:flex;"><div class="commeriq-modal-overlay"></div>' +
             '<div class="commeriq-modal-content" style="max-width: 400px;">' +
             '<div class="commeriq-modal-body" style="text-align:center; padding:24px;">' +
             '<span class="dashicons ' + iconClass + '" style="font-size:48px; width:48px; height:48px; color:' + iconColor + ';"></span>' +
@@ -40,6 +44,50 @@
         });
     }
 
+    // WordPress admin notice function - displays at the bottom of the screen
+    function showAdminNotice(message, type) {
+        type = type || 'info';
+        var noticeClass = type === 'success' ? 'notice-success' :
+            type === 'error' ? 'notice-error' :
+                type === 'warning' ? 'notice-warning' :
+                    'notice-info';
+
+        // Remove any existing CommerIQ notices
+        $('.commeriq-admin-notice').remove();
+
+        // Create the notice HTML
+        var noticeHtml = '<div class="notice ' + noticeClass + ' is-dismissible commeriq-admin-notice" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">' +
+            '<p><strong>CommerIQ:</strong> ' + message + '</p>' +
+            '<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>' +
+            '</div>';
+
+        // Append to body
+        $('body').append(noticeHtml);
+
+        // Handle dismiss button
+        $('.commeriq-admin-notice .notice-dismiss').on('click', function () {
+            $(this).closest('.commeriq-admin-notice').fadeOut(300, function () {
+                $(this).remove();
+            });
+        });
+
+        // Auto-dismiss after 8 seconds for non-error messages
+        if (type !== 'error') {
+            setTimeout(function () {
+                $('.commeriq-admin-notice').fadeOut(300, function () {
+                    $(this).remove();
+                });
+            }, 8000);
+        } else {
+            // Auto-dismiss errors after 15 seconds
+            setTimeout(function () {
+                $('.commeriq-admin-notice').fadeOut(300, function () {
+                    $(this).remove();
+                });
+            }, 15000);
+        }
+    }
+
     $(document).ready(function () {
         // Price Comparison Handler
         $(document).on('click', '#commeriq-run-comparison', function (e) {
@@ -48,13 +96,24 @@
 
             // Prevent double clicks
             if ($btn.data('processing')) { return; }
+
+            // Check if product title exists
+            var title = $('#title').val() || '';
+            if (!title.trim()) {
+                showAdminNotice('Please enter a product title first before running price comparison.', 'error');
+                setTimeout(function () {
+                    $('#title').focus();
+                }, 100);
+                return;
+            }
+
             $btn.data('processing', true);
             $btn.prop('disabled', true);
 
             var postId = $btn.data('post-id') || $('#post_ID').val() || 0;
 
             // Show modal
-            $('#commeriq-comparison-modal').fadeIn(200);
+            showModal($('#commeriq-comparison-modal'));
             $('#commeriq-comparison-loading').show();
             $('#commeriq-comparison-results').hide().html('');
 
@@ -64,29 +123,43 @@
                 post_id: postId
             };
 
-            $.post(commeriqAdmin.ajax_url, data, function (resp) {
-                $btn.data('processing', false);
-                $btn.prop('disabled', false);
+            // Add timeout of 15 seconds
+            $.ajax({
+                url: commeriqAdmin.ajax_url,
+                type: 'POST',
+                data: data,
+                timeout: 15000, // 15 seconds
+                success: function (resp) {
+                    $btn.data('processing', false);
+                    $btn.prop('disabled', false);
 
-                if (resp && resp.success && resp.data) {
-                    displayComparisonResults(resp.data);
-                } else {
-                    var errorMsg = 'Unknown error';
-                    if (resp && resp.data && resp.data.message) {
-                        errorMsg = resp.data.message;
+                    if (resp && resp.success && resp.data) {
+                        displayComparisonResults(resp.data);
+                    } else {
+                        var errorMsg = 'Unknown error';
+                        if (resp && resp.data && resp.data.message) {
+                            errorMsg = resp.data.message;
+                        }
+                        $('#commeriq-comparison-loading').hide();
+                        $('#commeriq-comparison-results').html(
+                            '<div class="notice notice-error"><p>' + errorMsg + '</p></div>'
+                        ).show();
                     }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $btn.data('processing', false);
+                    $btn.prop('disabled', false);
                     $('#commeriq-comparison-loading').hide();
+
+                    var errorMsg = 'Request failed. Please try again.';
+                    if (textStatus === 'timeout') {
+                        errorMsg = 'Request timed out. The price comparison is taking longer than expected. Please try again later or contact support if the issue persists.';
+                    }
+
                     $('#commeriq-comparison-results').html(
                         '<div class="notice notice-error"><p>' + errorMsg + '</p></div>'
                     ).show();
                 }
-            }).fail(function () {
-                $btn.data('processing', false);
-                $btn.prop('disabled', false);
-                $('#commeriq-comparison-loading').hide();
-                $('#commeriq-comparison-results').html(
-                    '<div class="notice notice-error"><p>Request failed. Please try again.</p></div>'
-                ).show();
             });
         });
 
@@ -232,7 +305,7 @@
             }
 
             // Show modal
-            $modal.fadeIn(200);
+            showModal($modal);
 
             // Handle button clicks
             $confirmBtn.off('click').on('click', function () {
@@ -275,29 +348,34 @@
             var editorId = $btn.data('editor-id') || 'content';
 
             if (!title.trim()) {
-                showAIModal('error', 'Please enter a product title first.', function () {
+                showAdminNotice('Please enter a product title first before generating AI content.', 'error');
+                setTimeout(function () {
                     $('#title').focus();
-                });
+                }, 100);
                 return;
             }
 
+            // Start generating immediately without confirmation modal
+            $btn.data('processing', true);
+            $btn.prop('disabled', true);
+            var originalHtml = $btn.html();
+            $btn.html('<span class="spinner is-active" style="float:none;margin:0 5px 0 0;"></span>Generating...');
+
             var descriptionType = (actionType === 'short') ? 'short description' : 'description';
-            showAIModal('confirm', 'Generate AI-powered product ' + descriptionType + ' for "' + title + '"? This will replace the current ' + descriptionType + '.', function (confirmed) {
-                if (!confirmed) return;
 
-                $btn.data('processing', true);
-                $btn.prop('disabled', true);
-                var originalHtml = $btn.html();
-                $btn.html('<span class="spinner is-active" style="float:none;margin:0 5px 0 0;"></span>Generating...');
+            var data = {
+                action: 'commeriq_generate_ai_content',
+                _nonce: commeriqAdmin.nonce,
+                post_id: postId,
+                action_type: actionType
+            };
 
-                var data = {
-                    action: 'commeriq_generate_ai_content',
-                    _nonce: commeriqAdmin.nonce,
-                    post_id: postId,
-                    action_type: actionType
-                };
-
-                $.post(commeriqAdmin.ajax_url, data, function (resp) {
+            $.ajax({
+                url: commeriqAdmin.ajax_url,
+                type: 'POST',
+                data: data,
+                timeout: 20000, // 20 seconds (AI generation can take longer)
+                success: function (resp) {
                     console.log('AI Content Response:', resp);
                     $btn.data('processing', false);
                     $btn.prop('disabled', false);
@@ -335,21 +413,18 @@
                             }
                         }
 
-                        // Show success notice
+                        // Show success admin notice without modal
                         var successType = (actionType === 'short') ? 'short description' : 'description';
-                        if ($('.commeriq-ai-success-notice').length === 0) {
-                            $('<div class="notice notice-success is-dismissible commeriq-ai-success-notice"><p><strong>AI Content Generated!</strong> The product ' + successType + ' has been updated. Review and save the product.</p></div>')
-                                .insertAfter('.wp-header-end');
-                            setTimeout(function () { $('.commeriq-ai-success-notice').fadeOut(); }, 7000);
-                        }
+                        showAdminNotice('AI content generated successfully! The product ' + successType + ' has been updated. Please review and save the product.', 'success');
                     } else {
                         var errorMsg = 'Failed to generate content';
                         if (resp && resp.data && resp.data.message) {
                             errorMsg = resp.data.message;
                         }
-                        showAIModal('error', 'Error: ' + errorMsg);
+                        showAdminNotice('Error: ' + errorMsg, 'error');
                     }
-                }).fail(function (jqXHR, textStatus, errorThrown) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.error('AI Content Error:', {
                         status: jqXHR.status,
                         statusText: jqXHR.statusText,
@@ -362,7 +437,9 @@
                     $btn.html(originalHtml);
 
                     var errorMsg = 'Request failed. Please check your connection and try again.';
-                    if (jqXHR.status === 403) {
+                    if (textStatus === 'timeout') {
+                        errorMsg = 'Request timed out. AI content generation is taking longer than expected. Please try again later or contact support if the issue persists.';
+                    } else if (jqXHR.status === 403) {
                         errorMsg = 'Permission denied. Please refresh the page and try again.';
                     } else if (jqXHR.status === 400 || jqXHR.status === 404) {
                         try {
@@ -372,8 +449,8 @@
                             }
                         } catch (e) { }
                     }
-                    showAIModal('error', errorMsg);
-                });
+                    showAdminNotice(errorMsg, 'error');
+                }
             });
         });
 
@@ -657,7 +734,7 @@
         $('#commeriq-image-size').val('1024x1024');
 
         // Show modal
-        $('#commeriq-ai-image-modal').fadeIn(200);
+        showModal($('#commeriq-ai-image-modal'));
     });
 
     // Start image generation
@@ -666,7 +743,20 @@
 
         var postId = $('#post_ID').val();
         if (!postId) {
-            showNotification('Please save the product first before generating an image.', 'error');
+            $('#commeriq-ai-image-modal').fadeOut(200);
+            showAdminNotice('Please save the product first before generating an image.', 'error');
+            return;
+        }
+
+        // Check if product title exists
+        var title = $('#title').val() || '';
+        if (!title.trim()) {
+            // Hide modal and show admin notice
+            $('#commeriq-ai-image-modal').fadeOut(200);
+            showAdminNotice('Please enter a product title first before generating an AI image.', 'error');
+            setTimeout(function () {
+                $('#title').focus();
+            }, 100);
             return;
         }
 
@@ -747,29 +837,43 @@
             $btn.prop('disabled', false).html(originalText);
 
             if (resp && resp.success) {
-                // Update the product image thumbnail
-                if (generatedImageData.thumbnail_url) {
-                    $('#set-post-thumbnail img').attr('src', generatedImageData.thumbnail_url);
-                    $('#postimagediv .inside').html('<img src="' + generatedImageData.thumbnail_url + '" style="max-width:100%;" />');
-                }
-
                 // Close modal first
                 $('#commeriq-ai-image-modal').fadeOut(200);
 
-                // Show success message
-                showNotification('Product image set successfully!', 'success');
+                // Update the product image thumbnail in the sidebar
+                if (generatedImageData.thumbnail_url) {
+                    // Update the "Set product image" link area
+                    var $setImageLink = $('#set-post-thumbnail');
+                    if ($setImageLink.length) {
+                        // Replace the link with the image
+                        $setImageLink.html('<img src="' + generatedImageData.thumbnail_url + '" alt="Product Image" style="max-width:100%;" />');
 
-                // Reload page to refresh the featured image display
-                location.reload();
+                        // Also update any existing image in the postimagediv
+                        var $removeLink = $('#remove-post-thumbnail');
+                        if ($removeLink.length === 0) {
+                            // Add the remove link if it doesn't exist
+                            $setImageLink.after('<p class="hide-if-no-js"><a href="#" id="remove-post-thumbnail">Remove product image</a></p>');
+                        }
+                        $removeLink.show();
+                    }
+
+                    // Update the #postimagediv inside area
+                    $('#postimagediv .inside').html('<img src="' + generatedImageData.thumbnail_url + '" alt="Product Image" style="max-width:100%;" />');
+                }
+
+                // Show success message
+                showAdminNotice('Product image set successfully!', 'success');
+
+                // No page reload - UI is updated dynamically above
             } else {
                 var errorMsg = (resp && resp.data && resp.data.message)
                     ? resp.data.message
                     : 'Failed to set product image.';
-                showNotification(errorMsg, 'error');
+                showAdminNotice(errorMsg, 'error');
             }
         }).fail(function () {
             $btn.prop('disabled', false).html(originalText);
-            showNotification('Request failed. Please try again.', 'error');
+            showAdminNotice('Request failed. Please try again.', 'error');
         });
     });
 
@@ -778,11 +882,11 @@
         e.preventDefault();
 
         if (!generatedImageData || !generatedImageData.attachment_id) {
-            showNotification('No image data available.', 'error');
+            showAdminNotice('No image data available.', 'error');
             return;
         }
 
-        showNotification('Image has been saved to your Media Library! (ID: ' + generatedImageData.attachment_id + ')', 'success');
+        showAdminNotice('Image has been saved to your Media Library! (ID: ' + generatedImageData.attachment_id + ')', 'success');
     });
 
     // Regenerate image
