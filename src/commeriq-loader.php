@@ -112,7 +112,7 @@ class Loader
     public static function render_settings_page()
     {
         if (!current_user_can('manage_woocommerce')) {
-            wp_die(esc_html__('Unauthorized', 'commeriq-ai-powered-commerce-insights-for-woocommerce'));
+            wp_die(esc_html__('Unauthorized', 'woocommerce-commeriq'));
         }
         
         // Ensure LicenseManager is loaded before view

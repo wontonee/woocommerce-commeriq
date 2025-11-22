@@ -8,7 +8,7 @@
  * Author URI: https://wontonee.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: commeriq-ai-powered-commerce-insights-for-woocommerce
+ * Text Domain: woocommerce-commeriq
  */
 
 defined('ABSPATH') || exit;
