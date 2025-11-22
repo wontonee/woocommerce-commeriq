@@ -10,8 +10,8 @@ defined('ABSPATH') || exit;
 
 return [
     // Environment: 'local' or 'production'
-    // Force 'local' for development, or use WP_DEBUG to auto-detect
-    'environment' => 'local', // Change to 'production' when deploying
+    // Use the constant from commeriq.php for centralized control
+    'environment' => defined('COMMERIQ_API_ENV') ? COMMERIQ_API_ENV : 'production',
     
     // API Base URLs
     'api_urls' => [

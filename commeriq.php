@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: CommerIQ — AI Powered Commerce Insights for WooCommerce
- * Plugin URI: https://example.com/commeriq
+ * Plugin URI: https://wontonee.com
  * Description: AI-assisted price comparison and margin analytics for WooCommerce (v1.0).
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: CommerIQ
  * Text Domain: commeriq
  * Domain Path: /languages
@@ -21,12 +21,12 @@ if (!defined('COMMERIQ_PLUGIN_URL')) {
     define('COMMERIQ_PLUGIN_URL', plugin_dir_url(COMMERIQ_PLUGIN_FILE));
 }
 if (!defined('COMMERIQ_VERSION')) {
-    define('COMMERIQ_VERSION', '1.0.0');
+    define('COMMERIQ_VERSION', '1.0.1');
 }
 
 // API Configuration Constants
 if (!defined('COMMERIQ_API_ENV')) {
-    define('COMMERIQ_API_ENV', 'local'); // 'local' or 'production'
+    define('COMMERIQ_API_ENV', 'production'); // 'local' or 'production'
 }
 if (!defined('COMMERIQ_API_LOCAL')) {
     define('COMMERIQ_API_LOCAL', 'https://licenseapp.test/api/commeriq');
