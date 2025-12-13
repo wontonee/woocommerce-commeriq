@@ -9,6 +9,7 @@
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: commeriq-ai-powered-commerce-insights-for-woocommerce
+ * Requires Plugins: woocommerce
  */
 
 defined('ABSPATH') || exit;

@@ -81,9 +81,42 @@ class Loader
         if (strpos($hook, 'commeriq-settings') !== false) {
             // Settings page: modern BlogIBot-inspired design
             wp_enqueue_style('commeriq-admin-settings', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin-settings.css', ['commeriq-admin-common'], COMMERIQ_VERSION . '.' . time());
+            
+            // Enqueue settings page script
+            wp_enqueue_script('commeriq-admin-settings', COMMERIQ_PLUGIN_URL . 'assets/js/commeriq-admin-settings.js', ['jquery'], COMMERIQ_VERSION, true);
+            wp_localize_script('commeriq-admin-settings', 'commeriqSettings', [
+                'i18n' => [
+                    'licenseRequired' => __('License Required', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'licenseRequiredMessage' => __('Please activate your license to access this feature.', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'removeLicense' => __('Remove License?', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'removeLicenseMessage' => __('Are you sure you want to remove your license? This will disable all CommerIQ features.', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'processing' => __('Processing', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'removingLicense' => __('Removing license...', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'success' => __('Success', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'licenseRemovedSuccess' => __('License removed successfully', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'error' => __('Error', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'licenseRemoveFailed' => __('Failed to remove license', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'connectionFailed' => __('Connection failed', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'validationError' => __('Validation Error', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'fillAllFields' => __('Please fill in all fields', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'activatingLicense' => __('Activating your license...', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'licenseActivatedSuccess' => __('License activated successfully', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'activationFailed' => __('Activation Failed', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'licenseActivateFailed' => __('Failed to activate license', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'refreshing' => __('Refreshing', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'storeDataRefreshed' => __('Store data refreshed', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'refreshDataFailed' => __('Failed to refresh data', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                ],
+            ]);
         } else {
             // Product editor and other admin pages
             wp_enqueue_style('commeriq-admin-product', COMMERIQ_PLUGIN_URL . 'assets/css/commeriq-admin-product.css', ['commeriq-admin-common'], COMMERIQ_VERSION . '.5');
+        }
+        
+        // Enqueue product editor script on product edit pages
+        $screen = get_current_screen();
+        if ($screen && $screen->post_type === 'product') {
+            wp_enqueue_script('commeriq-product-editor', COMMERIQ_PLUGIN_URL . 'assets/js/commeriq-product-editor.js', ['jquery'], COMMERIQ_VERSION, true);
         }
         
         wp_enqueue_script('commeriq-admin', COMMERIQ_PLUGIN_URL . 'assets/js/commeriq-admin.js', ['jquery'], COMMERIQ_VERSION . '.7', true);
