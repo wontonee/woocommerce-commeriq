@@ -34,8 +34,7 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
 
     <h2 class="nav-tab-wrapper">
         <a class="nav-tab nav-tab-active" href="#tab-licence"><?php esc_html_e('License', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></a>
-        <?php $commeriq_store_tab_class = $commeriq_is_active ? 'nav-tab' : 'nav-tab nav-tab-disabled'; ?>
-        <a class="<?php echo esc_attr($commeriq_store_tab_class); ?>" href="#tab-store" data-disabled="<?php echo esc_attr($commeriq_is_active ? '0' : '1'); ?>"><?php esc_html_e('Store Analyzer', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></a>
+        <a class="nav-tab" href="#tab-store"><?php esc_html_e('Store Analyzer', 'commeriq-ai-powered-commerce-insights-for-woocommerce'); ?></a>
     </h2>
 
     <div class="commeriq-tab-content">

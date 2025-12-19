@@ -4,13 +4,6 @@
         $('.nav-tab').on('click', function(e){
             e.preventDefault();
             const $tab = $(this);
-            
-            // Check if tab is disabled
-            if ($tab.hasClass('nav-tab-disabled') || $tab.data('disabled') === '1') {
-                commeriqShowModal('⚠️', commeriqSettings.i18n.licenseRequired, commeriqSettings.i18n.licenseRequiredMessage, true);
-                return;
-            }
-            
             const tabId = $tab.attr('href');
             
             // Update nav tabs

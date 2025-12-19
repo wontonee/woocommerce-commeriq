@@ -47,14 +47,6 @@ class ProductEditor
             return;
         }
 
-        // Check if license is activated
-        $license = get_option('commeriq_license', []);
-        $is_active = !empty($license['licence_key']) && !empty($license['status']) && $license['status'] === 'active';
-
-        if (!$is_active) {
-            return; // Don't show button if license not active
-        }
-
         ?>
         <div class="options_group" style="border-top: 1px solid #eee; padding-top: 12px;">
             <p class="form-field">
@@ -117,14 +109,6 @@ class ProductEditor
         // Only show on product edit screens
         if (!$screen || $screen->post_type !== 'product') {
             return;
-        }
-
-        // Check if license is activated
-        $license = get_option('commeriq_license', []);
-        $is_active = !empty($license['licence_key']) && !empty($license['status']) && $license['status'] === 'active';
-
-        if (!$is_active) {
-            return; // Don't show button if license not active
         }
 
         ?>
