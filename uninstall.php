@@ -12,5 +12,5 @@ delete_site_option($commeriq_option_key);
 
 // Drop custom table
 $commeriq_table_name = $wpdb->prefix . 'commeriq_price_comparisons';
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Necessary for plugin uninstall, table name is prefixed and escaped
-$wpdb->query(sprintf('DROP TABLE IF EXISTS `%s`', esc_sql($commeriq_table_name)));
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange -- Necessary for plugin uninstall
+$wpdb->query($wpdb->prepare('DROP TABLE IF EXISTS %i', $commeriq_table_name));

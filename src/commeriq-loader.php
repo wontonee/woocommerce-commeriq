@@ -86,26 +86,26 @@ class Loader
             wp_enqueue_script('commeriq-admin-settings', COMMERIQ_PLUGIN_URL . 'assets/js/commeriq-admin-settings.js', ['jquery'], COMMERIQ_VERSION, true);
             wp_localize_script('commeriq-admin-settings', 'commeriqSettings', [
                 'i18n' => [
-                    'licenseRequired' => __('License Required', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'licenseRequiredMessage' => __('Please activate your license to access this feature.', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'removeLicense' => __('Remove License?', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'removeLicenseMessage' => __('Are you sure you want to remove your license? This will disable all CommerIQ features.', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'processing' => __('Processing', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'removingLicense' => __('Removing license...', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'success' => __('Success', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'licenseRemovedSuccess' => __('License removed successfully', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'error' => __('Error', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'licenseRemoveFailed' => __('Failed to remove license', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'connectionFailed' => __('Connection failed', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'validationError' => __('Validation Error', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'fillAllFields' => __('Please fill in all fields', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'activatingLicense' => __('Activating your license...', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'licenseActivatedSuccess' => __('License activated successfully', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'activationFailed' => __('Activation Failed', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'licenseActivateFailed' => __('Failed to activate license', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'refreshing' => __('Refreshing', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'storeDataRefreshed' => __('Store data refreshed', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
-                    'refreshDataFailed' => __('Failed to refresh data', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                    'licenseRequired' => __('License Required', 'wontonee-commeriq'),
+                    'licenseRequiredMessage' => __('Please activate your license to access this feature.', 'wontonee-commeriq'),
+                    'removeLicense' => __('Remove License?', 'wontonee-commeriq'),
+                    'removeLicenseMessage' => __('Are you sure you want to remove your license? This will disable all CommerIQ features.', 'wontonee-commeriq'),
+                    'processing' => __('Processing', 'wontonee-commeriq'),
+                    'removingLicense' => __('Removing license...', 'wontonee-commeriq'),
+                    'success' => __('Success', 'wontonee-commeriq'),
+                    'licenseRemovedSuccess' => __('License removed successfully', 'wontonee-commeriq'),
+                    'error' => __('Error', 'wontonee-commeriq'),
+                    'licenseRemoveFailed' => __('Failed to remove license', 'wontonee-commeriq'),
+                    'connectionFailed' => __('Connection failed', 'wontonee-commeriq'),
+                    'validationError' => __('Validation Error', 'wontonee-commeriq'),
+                    'fillAllFields' => __('Please fill in all fields', 'wontonee-commeriq'),
+                    'activatingLicense' => __('Activating your license...', 'wontonee-commeriq'),
+                    'licenseActivatedSuccess' => __('License activated successfully', 'wontonee-commeriq'),
+                    'activationFailed' => __('Activation Failed', 'wontonee-commeriq'),
+                    'licenseActivateFailed' => __('Failed to activate license', 'wontonee-commeriq'),
+                    'refreshing' => __('Refreshing', 'wontonee-commeriq'),
+                    'storeDataRefreshed' => __('Store data refreshed', 'wontonee-commeriq'),
+                    'refreshDataFailed' => __('Failed to refresh data', 'wontonee-commeriq'),
                 ],
             ]);
         } else {
@@ -145,7 +145,7 @@ class Loader
     public static function render_settings_page()
     {
         if (!current_user_can('manage_woocommerce')) {
-            wp_die(esc_html__('Unauthorized', 'commeriq-ai-powered-commerce-insights-for-woocommerce'));
+            wp_die(esc_html__('Unauthorized', 'wontonee-commeriq'));
         }
         
         // Ensure LicenseManager is loaded before view

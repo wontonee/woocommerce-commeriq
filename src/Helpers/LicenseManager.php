@@ -61,13 +61,13 @@ class LicenseManager
             
             return [
                 'success' => true,
-                'message' => isset($data['message']) ? $data['message'] : __('License activated successfully', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                'message' => isset($data['message']) ? $data['message'] : __('License activated successfully', 'wontonee-commeriq'),
                 'data' => $license_data,
             ];
         }
 
         // Handle error response
-        $error_message = __('License activation failed', 'commeriq-ai-powered-commerce-insights-for-woocommerce');
+        $error_message = __('License activation failed', 'wontonee-commeriq');
         if (isset($data['message'])) {
             $error_message = $data['message'];
         } elseif (isset($data['status']) && $data['status'] === 'error') {
@@ -136,12 +136,12 @@ class LicenseManager
             
             return [
                 'success' => true,
-                'message' => isset($data['message']) ? $data['message'] : __('License removed successfully', 'commeriq-ai-powered-commerce-insights-for-woocommerce'),
+                'message' => isset($data['message']) ? $data['message'] : __('License removed successfully', 'wontonee-commeriq'),
             ];
         }
 
         // Handle error response
-        $error_message = __('License removal failed', 'commeriq-ai-powered-commerce-insights-for-woocommerce');
+        $error_message = __('License removal failed', 'wontonee-commeriq');
         if (isset($data['message'])) {
             $error_message = $data['message'];
         } elseif (isset($data['status']) && $data['status'] === 'error') {

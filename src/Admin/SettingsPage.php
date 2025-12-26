@@ -18,10 +18,10 @@ class SettingsPage
     {
         register_setting('commeriq_license_group', self::OPTION_KEY, ['type' => 'array', 'sanitize_callback' => [__CLASS__, 'sanitize']]);
 
-        add_settings_section('commeriq_license_section', __('Licence', 'commeriq-ai-powered-commerce-insights-for-woocommerce'), [__CLASS__, 'section_cb'], 'commeriq-settings');
+        add_settings_section('commeriq_license_section', __('Licence', 'wontonee-commeriq'), [__CLASS__, 'section_cb'], 'commeriq-settings');
 
-        add_settings_field('licence_key', __('Licence Key', 'commeriq-ai-powered-commerce-insights-for-woocommerce'), [__CLASS__, 'field_licence_key'], 'commeriq-settings', 'commeriq_license_section');
-        add_settings_field('domain_name', __('Domain Name', 'commeriq-ai-powered-commerce-insights-for-woocommerce'), [__CLASS__, 'field_domain_name'], 'commeriq-settings', 'commeriq_license_section');
+        add_settings_field('licence_key', __('Licence Key', 'wontonee-commeriq'), [__CLASS__, 'field_licence_key'], 'commeriq-settings', 'commeriq_license_section');
+        add_settings_field('domain_name', __('Domain Name', 'wontonee-commeriq'), [__CLASS__, 'field_domain_name'], 'commeriq-settings', 'commeriq_license_section');
     }
 
     public static function sanitize($input)
@@ -37,7 +37,7 @@ class SettingsPage
 
     public static function section_cb()
     {
-        echo '<p>' . esc_html__('Enter your licence details.', 'commeriq-ai-powered-commerce-insights-for-woocommerce') . '</p>';
+        echo '<p>' . esc_html__('Enter your licence details.', 'wontonee-commeriq') . '</p>';
     }
 
     public static function field_licence_key()
