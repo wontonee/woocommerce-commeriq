@@ -33,23 +33,11 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
     </div>
 
     <h2 class="nav-tab-wrapper">
-        <a class="nav-tab nav-tab-active" href="#tab-licence"><?php esc_html_e('API Settings', 'wontonee-commeriq'); ?></a>
+        <a class="nav-tab nav-tab-active" href="#tab-licence"><?php esc_html_e('License', 'wontonee-commeriq'); ?></a>
         <a class="nav-tab" href="#tab-store"><?php esc_html_e('Store Analyzer', 'wontonee-commeriq'); ?></a>
     </h2>
 
     <div class="commeriq-tab-content">
-        <!-- External Service Notice -->
-        <div style="max-width: 1400px; margin: 20px auto; padding: 0 40px;">
-            <div class="notice notice-info inline">
-                <p>
-                    <strong><?php esc_html_e('External AI Service Integration:', 'wontonee-commeriq'); ?></strong>
-                    <?php esc_html_e('This plugin connects to CommerIQ AI services for product description generation, image creation, and price comparison. All AI processing happens on external servers.', 'wontonee-commeriq'); ?>
-                    <a href="#" id="commeriq-show-terms" style="text-decoration: none;"><?php esc_html_e('Terms of Service', 'wontonee-commeriq'); ?></a> | 
-                    <a href="#" id="commeriq-show-privacy" style="text-decoration: none;"><?php esc_html_e('Privacy Policy', 'wontonee-commeriq'); ?></a>
-                </p>
-            </div>
-        </div>
-        
         <!-- License Tab -->
         <div id="tab-licence" class="commeriq-tab commeriq-tab-active">
             <div class="commeriq-license-management">
@@ -62,8 +50,8 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                                     <span class="dashicons dashicons-yes-alt"></span>
                                 </span>
                                 <div class="commeriq-status-text">
-                                    <h3><?php esc_html_e('API Credentials Configured', 'wontonee-commeriq'); ?></h3>
-                                    <p><?php esc_html_e('Connected to CommerIQ AI services. All features are ready to use.', 'wontonee-commeriq'); ?></p>
+                                    <h3><?php esc_html_e('License Active', 'wontonee-commeriq'); ?></h3>
+                                    <p><?php esc_html_e('Your license is active and all features are enabled', 'wontonee-commeriq'); ?></p>
                                 </div>
                             </div>
                             <div class="commeriq-license-actions">
@@ -82,7 +70,7 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                             <div class="commeriq-detail-item">
                                 <span class="commeriq-detail-icon">🔑</span>
                                 <div class="commeriq-detail-content">
-                                    <span class="commeriq-detail-label"><?php esc_html_e('API Key', 'wontonee-commeriq'); ?></span>
+                                    <span class="commeriq-detail-label"><?php esc_html_e('License Key', 'wontonee-commeriq'); ?></span>
                                     <span class="commeriq-detail-value"><?php echo esc_html($commeriq_licence_key); ?></span>
                                 </div>
                             </div>
@@ -173,13 +161,13 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                                     <span class="dashicons dashicons-lock"></span>
                                 </span>
                                 <div class="commeriq-status-text">
-                                    <h3><?php esc_html_e('Configure API Credentials', 'wontonee-commeriq'); ?></h3>
-                                    <p><?php esc_html_e('Enter your API credentials to connect to CommerIQ AI services. All features are fully functional once configured.', 'wontonee-commeriq'); ?></p>
+                                    <h3><?php esc_html_e('Activate Your License', 'wontonee-commeriq'); ?></h3>
+                                    <p><?php esc_html_e('Enter your license key to unlock all AI-powered features', 'wontonee-commeriq'); ?></p>
                                 </div>
                             </div>
                             <a href="https://myapps.wontonee.com" target="_blank" rel="noopener noreferrer" class="button button-primary">
                                 <span class="dashicons dashicons-external"></span>
-                                <?php esc_html_e('Get API Credentials', 'wontonee-commeriq'); ?>
+                                <?php esc_html_e('Get License', 'wontonee-commeriq'); ?>
                             </a>
                         </div>
                         
@@ -187,27 +175,27 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                             <?php wp_nonce_field('commeriq_license_nonce', 'commeriq_license_nonce'); ?>
                             <div class="commeriq-form-grid">
                                 <div class="commeriq-form-field">
-                                    <label for="licence_key"><?php esc_html_e('API Key', 'wontonee-commeriq'); ?></label>
-                                    <input type="text" id="licence_key" name="licence_key" placeholder="<?php esc_attr_e('Enter your API key', 'wontonee-commeriq'); ?>" required>
-                                    <span class="commeriq-field-hint"><?php esc_html_e('Your API key from myapps.wontonee.com - Required to connect to AI services', 'wontonee-commeriq'); ?></span>
+                                    <label for="licence_key"><?php esc_html_e('License Key', 'wontonee-commeriq'); ?></label>
+                                    <input type="text" id="licence_key" name="licence_key" placeholder="<?php esc_attr_e('Enter your license key', 'wontonee-commeriq'); ?>" required>
+                                    <span class="commeriq-field-hint"><?php esc_html_e('Your unique license key from myapps.wontonee.com', 'wontonee-commeriq'); ?></span>
                                 </div>
                                 <div class="commeriq-form-field">
                                     <label for="domain_name"><?php esc_html_e('Domain', 'wontonee-commeriq'); ?></label>
                                     <input type="text" id="domain_name" name="domain_name" value="<?php echo esc_attr($commeriq_current_domain); ?>" placeholder="<?php esc_attr_e('example.com', 'wontonee-commeriq'); ?>" required>
-                                    <span class="commeriq-field-hint"><?php esc_html_e('The domain where this plugin is installed', 'wontonee-commeriq'); ?></span>
+                                    <span class="commeriq-field-hint"><?php esc_html_e('The domain where this license will be activated', 'wontonee-commeriq'); ?></span>
                                 </div>
                             </div>
                             <div class="commeriq-form-actions">
                                 <button type="submit" class="button button-primary button-hero">
                                     <span class="dashicons dashicons-yes-alt"></span>
-                                    <?php esc_html_e('Save API Credentials', 'wontonee-commeriq'); ?>
+                                    <?php esc_html_e('Activate License', 'wontonee-commeriq'); ?>
                                 </button>
                             </div>
                         </form>
 
                         <!-- Features Preview -->
                         <div class="commeriq-features-preview">
-                            <h4><?php esc_html_e('Available Features (Requires API Connection)', 'wontonee-commeriq'); ?></h4>
+                            <h4><?php esc_html_e('Unlock These Features', 'wontonee-commeriq'); ?></h4>
                             <div class="commeriq-features-grid">
                                 <div class="commeriq-feature-card">
                                     <div class="commeriq-feature-icon">📊</div>
@@ -396,85 +384,6 @@ $commeriq_current_domain = LicenseManager::get_current_domain();
                         <?php esc_html_e('WooCommerce Settings', 'wontonee-commeriq'); ?>
                     </a>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Terms of Service Modal -->
-<div id="commeriq-terms-modal" class="commeriq-modal" style="display:none;">
-    <div class="commeriq-modal-backdrop"></div>
-    <div class="commeriq-modal-dialog" style="max-width: 800px;">
-        <div class="commeriq-modal-content">
-            <div class="commeriq-modal-header">
-                <h2><?php esc_html_e('CommerIQ Terms of Service', 'wontonee-commeriq'); ?></h2>
-                <button type="button" class="commeriq-modal-close" id="commeriq-terms-close">&times;</button>
-            </div>
-            <div class="commeriq-modal-body" style="max-height: 500px; overflow-y: auto; text-align: left;">
-                <h3><?php esc_html_e('1. Service Description', 'wontonee-commeriq'); ?></h3>
-                <p><?php esc_html_e('CommerIQ provides AI-powered services for WooCommerce stores including product description generation, image creation, and competitive price comparison. These services are provided through external API endpoints.', 'wontonee-commeriq'); ?></p>
-                
-                <h3><?php esc_html_e('2. Data Processing', 'wontonee-commeriq'); ?></h3>
-                <p><?php esc_html_e('To provide our services, we process product information including titles, descriptions, prices, and images. This data is transmitted to our servers for AI processing and is not stored permanently.', 'wontonee-commeriq'); ?></p>
-                
-                <h3><?php esc_html_e('3. API Usage', 'wontonee-commeriq'); ?></h3>
-                <p><?php esc_html_e('You are granted a non-exclusive license to use CommerIQ API services. API credentials are unique to your domain and must not be shared.', 'wontonee-commeriq'); ?></p>
-                
-                <h3><?php esc_html_e('4. Service Availability', 'wontonee-commeriq'); ?></h3>
-                <p><?php esc_html_e('We strive to maintain 99.9% uptime but cannot guarantee uninterrupted service. Scheduled maintenance will be announced in advance when possible.', 'wontonee-commeriq'); ?></p>
-                
-                <h3><?php esc_html_e('5. Acceptable Use', 'wontonee-commeriq'); ?></h3>
-                <p><?php esc_html_e('You agree not to misuse our services, attempt to access unauthorized systems, or use the service for illegal purposes.', 'wontonee-commeriq'); ?></p>
-                
-                <p style="margin-top: 20px;">
-                    <a href="https://wontonee.com/terms" target="_blank" rel="noopener noreferrer">
-                        <?php esc_html_e('View Full Terms of Service', 'wontonee-commeriq'); ?> →
-                    </a>
-                </p>
-            </div>
-            <div class="commeriq-modal-footer">
-                <button type="button" class="button button-primary" id="commeriq-terms-close-btn"><?php esc_html_e('Close', 'wontonee-commeriq'); ?></button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Privacy Policy Modal -->
-<div id="commeriq-privacy-modal" class="commeriq-modal" style="display:none;">
-    <div class="commeriq-modal-backdrop"></div>
-    <div class="commeriq-modal-dialog" style="max-width: 800px;">
-        <div class="commeriq-modal-content">
-            <div class="commeriq-modal-header">
-                <h2><?php esc_html_e('CommerIQ Privacy Policy', 'wontonee-commeriq'); ?></h2>
-                <button type="button" class="commeriq-modal-close" id="commeriq-privacy-close">&times;</button>
-            </div>
-            <div class="commeriq-modal-body" style="max-height: 500px; overflow-y: auto; text-align: left;">
-                <h3><?php esc_html_e('1. Information We Collect', 'wontonee-commeriq'); ?></h3>
-                <p><?php esc_html_e('We collect product information (titles, descriptions, prices, images) that you send through our API for processing. We also collect API usage statistics and error logs.', 'wontonee-commeriq'); ?></p>
-                
-                <h3><?php esc_html_e('2. How We Use Your Data', 'wontonee-commeriq'); ?></h3>
-                <p><?php esc_html_e('Your product data is used solely to provide AI-powered services (content generation, image creation, price comparison). Data is processed in real-time and not stored permanently on our servers.', 'wontonee-commeriq'); ?></p>
-                
-                <h3><?php esc_html_e('3. Data Security', 'wontonee-commeriq'); ?></h3>
-                <p><?php esc_html_e('All data transmission uses industry-standard encryption (HTTPS/TLS). We implement security measures to protect against unauthorized access.', 'wontonee-commeriq'); ?></p>
-                
-                <h3><?php esc_html_e('4. Data Retention', 'wontonee-commeriq'); ?></h3>
-                <p><?php esc_html_e('Product data sent for processing is not permanently stored. API logs are retained for 30 days for troubleshooting purposes only.', 'wontonee-commeriq'); ?></p>
-                
-                <h3><?php esc_html_e('5. Third-Party Services', 'wontonee-commeriq'); ?></h3>
-                <p><?php esc_html_e('We use third-party AI providers to power some features. These providers process data according to their own privacy policies and security standards.', 'wontonee-commeriq'); ?></p>
-                
-                <h3><?php esc_html_e('6. Your Rights', 'wontonee-commeriq'); ?></h3>
-                <p><?php esc_html_e('You have the right to access, correct, or delete your data. Contact us at privacy@wontonee.com for any privacy-related requests.', 'wontonee-commeriq'); ?></p>
-                
-                <p style="margin-top: 20px;">
-                    <a href="https://wontonee.com/privacy" target="_blank" rel="noopener noreferrer">
-                        <?php esc_html_e('View Full Privacy Policy', 'wontonee-commeriq'); ?> →
-                    </a>
-                </p>
-            </div>
-            <div class="commeriq-modal-footer">
-                <button type="button" class="button button-primary" id="commeriq-privacy-close-btn"><?php esc_html_e('Close', 'wontonee-commeriq'); ?></button>
             </div>
         </div>
     </div>

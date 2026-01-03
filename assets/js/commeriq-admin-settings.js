@@ -1,5 +1,25 @@
 (function($){
     $(document).ready(function(){
+        // Terms of Service Modal
+        $('#commeriq-show-terms').on('click', function(e){
+            e.preventDefault();
+            $('#commeriq-terms-modal').fadeIn(200);
+        });
+        
+        $('#commeriq-terms-close, #commeriq-terms-close-btn, #commeriq-terms-modal .commeriq-modal-backdrop').on('click', function(){
+            $('#commeriq-terms-modal').fadeOut(200);
+        });
+        
+        // Privacy Policy Modal
+        $('#commeriq-show-privacy').on('click', function(e){
+            e.preventDefault();
+            $('#commeriq-privacy-modal').fadeIn(200);
+        });
+        
+        $('#commeriq-privacy-close, #commeriq-privacy-close-btn, #commeriq-privacy-modal .commeriq-modal-backdrop').on('click', function(){
+            $('#commeriq-privacy-modal').fadeOut(200);
+        });
+        
         // Tab switching
         $('.nav-tab').on('click', function(e){
             e.preventDefault();
@@ -19,25 +39,23 @@
         });
         
         // Show modify form
-        $('#commeriq-modify-license-btn').on('click', function(){
-            $('.commeriq-license-active').fadeOut(200, function(){
-                $('#commeriq-modify-form-container').fadeIn(200);
-            });
+        $('#commeriq-modify-api-btn').on('click', function(){
+            $('#commeriq-modify-form').slideDown(200);
+            $(this).prop('disabled', true);
         });
         
         // Cancel modify
-        $('#commeriq-cancel-modify-btn').on('click', function(){
-            $('#commeriq-modify-form-container').fadeOut(200, function(){
-                $('.commeriq-license-active').fadeIn(200);
-            });
+        $('#commeriq-cancel-modify').on('click', function(){
+            $('#commeriq-modify-form').slideUp(200);
+            $('#commeriq-modify-api-btn').prop('disabled', false);
         });
         
-        // Remove license
+        // Remove API credentials
         $('#commeriq-remove-license-btn').on('click', function(){
             commeriqShowConfirmModal(
                 '⚠️',
-                commeriqSettings.i18n.removeLicense,
-                commeriqSettings.i18n.removeLicenseMessage,
+                commeriqSettings.i18n.removeApi || 'Remove API Credentials?',
+                commeriqSettings.i18n.removeApiMessage || 'Are you sure you want to remove your API credentials? You will need to re-enter them to use AI features.',
                 function() {
                     // User confirmed, proceed with removal
                     commeriqShowModal('⌛', commeriqSettings.i18n.processing, commeriqSettings.i18n.removingLicense, false);
@@ -51,10 +69,10 @@
                         },
                         success: function(response){
                             if (response.success) {
-                                commeriqShowModal('✅', commeriqSettings.i18n.success, response.data.message || commeriqSettings.i18n.licenseRemovedSuccess, true);
-                                setTimeout(function(){ location.reload(); }, 2000);
+                                commeriqShowModal('✅', commeriqSettings.i18n.success, commeriqSettings.i18n.apiRemovedSuccess || 'API credentials removed successfully', true);
+                                setTimeout(() => location.reload(), 1500);
                             } else {
-                                commeriqShowModal('⚠️', commeriqSettings.i18n.error, response.data.message || commeriqSettings.i18n.licenseRemoveFailed, true);
+                                commeriqShowModal('❌', commeriqSettings.i18n.error, response.data || commeriqSettings.i18n.apiRemoveFailed || 'Failed to remove credentials', true);
                             }
                         },
                         error: function(){
@@ -82,7 +100,7 @@
             }
             
             $submitBtn.prop('disabled', true).html('<span class="dashicons dashicons-update" style="animation: rotation 2s infinite linear;"></span> ' + commeriqSettings.i18n.processing + '...');
-            commeriqShowModal('⌛', commeriqSettings.i18n.processing, commeriqSettings.i18n.activatingLicense, false);
+            commeriqShowModal('⌛', commeriqSettings.i18n.processing, commeriqSettings.i18n.savingApi || 'Saving API credentials...', false);
             
             $.ajax({
                 url: commeriqAdmin.ajax_url,
@@ -95,10 +113,10 @@
                 },
                 success: function(response){
                     if (response.success) {
-                        commeriqShowModal('✅', commeriqSettings.i18n.success + '!', response.data.message || commeriqSettings.i18n.licenseActivatedSuccess, true);
+                        commeriqShowModal('✅', commeriqSettings.i18n.success + '!', response.data.message || commeriqSettings.i18n.apiSavedSuccess || 'API credentials saved successfully', true);
                         setTimeout(function(){ location.reload(); }, 2000);
                     } else {
-                        commeriqShowModal('⚠️', commeriqSettings.i18n.activationFailed, response.data.message || commeriqSettings.i18n.licenseActivateFailed, true);
+                        commeriqShowModal('⚠️', commeriqSettings.i18n.saveFailed || 'Save Failed', response.data.message || commeriqSettings.i18n.apiSaveFailed || 'Failed to save credentials', true);
                         $submitBtn.prop('disabled', false).html(originalHtml);
                     }
                 },

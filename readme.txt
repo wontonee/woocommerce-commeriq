@@ -4,7 +4,7 @@ Tags: woocommerce, ai, seo, product-description, price-comparison
 Requires at least: 6.2
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,19 @@ AI-powered product descriptions, image generation, and price comparison for WooC
 
 **Transform Your WooCommerce Store with AI-Powered Intelligence**
 
-CommerIQ is the ultimate AI assistant for WooCommerce store owners who want to save time, increase sales, and stay competitive. Our powerful plugin automates the most time-consuming tasks while providing intelligent insights to help you make data-driven decisions.
+CommerIQ is the ultimate AI assistant for WooCommerce store owners who want to save time, increase sales, and stay competitive. Our powerful plugin connects to external AI services to automate the most time-consuming tasks while providing intelligent insights to help you make data-driven decisions.
+
+**Important: External Service Integration**
+
+This plugin connects to CommerIQ's external AI services to provide its functionality. The plugin itself is free and fully functional, but requires API credentials to connect to our AI processing servers.
+
+* **Service Provider:** Wontonee (CommerIQ AI Services)
+* **Service URL:** https://api.wontonee.com
+* **What data is sent:** Product titles, descriptions, prices, and images for AI processing
+* **Terms of Service:** https://wontonee.com/terms
+* **Privacy Policy:** https://wontonee.com/privacy
+
+All AI processing (content generation, image creation, price comparison) happens on our external servers as it requires significant computational resources that cannot be provided locally.
 
 = 🚀 Key Features =
 
@@ -68,13 +80,22 @@ CommerIQ is the ultimate AI assistant for WooCommerce store owners who want to s
 * Marketing teams
 * Anyone selling products online
 
-= 🔐 License & Support =
+= 🔐 API Credentials =
 
-CommerIQ requires a valid license key to unlock all features. Get your license at [https://wontonee.com/commeriq](https://wontonee.com/commeriq)
+CommerIQ connects to external AI services for processing. To use the plugin:
 
-= 📚 Documentation =
+1. Get free API credentials at [myapps.wontonee.com](https://myapps.wontonee.com)
+2. Enter your API key in the plugin settings
+3. Start using all AI-powered features immediately
 
-For detailed documentation, tutorials, and API reference, visit our [Documentation Center](https://wontonee.com/docs/commeriq)
+The plugin is completely free and open source. API credentials are required only to connect to our AI processing service.
+
+= 📚 Documentation & Legal =
+
+* **Documentation:** [https://wontonee.com/docs/commeriq](https://wontonee.com/docs/commeriq)
+* **Terms of Service:** [https://wontonee.com/terms](https://wontonee.com/terms)
+* **Privacy Policy:** [https://wontonee.com/privacy](https://wontonee.com/privacy)
+* **API Documentation:** [https://wontonee.com/api](https://wontonee.com/api)
 
 == Installation ==
 
@@ -162,6 +183,14 @@ Yes! Licensed users receive priority support. Contact us through our [Support Ce
 6. **Product Editor Integration** - AI features seamlessly integrated into WooCommerce
 
 == Changelog ==
+
+= 1.0.7 - 2026-01-03 =
+* WordPress.org Compliance: Redesigned settings page to meet serviceware guidelines
+* Changed: "License" terminology updated to "API Credentials" for clarity
+* Added: External service documentation with Terms of Service and Privacy Policy links
+* Improved: More transparent explanation of how the plugin uses external AI services
+* Fixed: All text domain issues for proper internationalization
+* Updated: Minimum WordPress version to 6.2 for security improvements
 
 = 1.0.1 - 2025-01-22 =
 * Enhanced: Updated license configuration system

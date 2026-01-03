@@ -3,7 +3,7 @@
  * Plugin Name: Wontonee CommerIQ — AI Commerce Insights for WooCommerce
  * Plugin URI: https://github.com/wontonee/woocommerce-commeriq
  * Description: Supercharge your WooCommerce store with AI-powered product descriptions, automated image generation, intelligent price comparison, and competitive market insights. Boost sales with smart content optimization and data-driven pricing strategies.
- * Version: 1.0.6
+ * Version: 1.0.7
  * Author: Wontonee
  * Author URI: https://wontonee.com
  * License: GPL v2 or later
@@ -24,7 +24,7 @@ if (!defined('COMMERIQ_PLUGIN_URL')) {
     define('COMMERIQ_PLUGIN_URL', plugin_dir_url(COMMERIQ_PLUGIN_FILE));
 }
 if (!defined('COMMERIQ_VERSION')) {
-    define('COMMERIQ_VERSION', '1.0.6');
+    define('COMMERIQ_VERSION', '1.0.7');
 }
 
 // API Configuration Constants
