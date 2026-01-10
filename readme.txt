@@ -1,10 +1,10 @@
 === Wontonee CommerIQ — AI Commerce Insights for WooCommerce ===
-Contributors: sajudeveloper18, wontonee
+Contributors: sajudeveloper18
 Tags: woocommerce, ai, seo, product-description, price-comparison
 Requires at least: 6.2
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,7 +21,7 @@ CommerIQ is the ultimate AI assistant for WooCommerce store owners who want to s
 This plugin connects to CommerIQ's external AI services to provide its functionality. The plugin itself is free and fully functional, but requires API credentials to connect to our AI processing servers.
 
 * **Service Provider:** Wontonee (CommerIQ AI Services)
-* **Service URL:** https://api.wontonee.com
+* **Service URL:** https://myapps.wontonee.com/api/commeriq
 * **What data is sent:** Product titles, descriptions, prices, and images for AI processing
 * **Terms of Service:** https://wontonee.com/terms
 * **Privacy Policy:** https://wontonee.com/privacy
@@ -92,10 +92,8 @@ The plugin is completely free and open source. API credentials are required only
 
 = 📚 Documentation & Legal =
 
-* **Documentation:** [https://wontonee.com/docs/commeriq](https://wontonee.com/docs/commeriq)
 * **Terms of Service:** [https://wontonee.com/terms](https://wontonee.com/terms)
 * **Privacy Policy:** [https://wontonee.com/privacy](https://wontonee.com/privacy)
-* **API Documentation:** [https://wontonee.com/api](https://wontonee.com/api)
 
 == Installation ==
 
